@@ -76,6 +76,9 @@ class ChargeOverAPI
 		}
 		*/
 		
+		$headers = array();
+		$headers[] = 'Content-Type: application/json';
+		
 		// create a new cURL resource
 		$ch = curl_init();
 		
@@ -84,10 +87,7 @@ class ChargeOverAPI
 			// Signed requests
 			$signature = $this->_signature($public, $private, $endpoint, $data);
 			
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array( 
-				$signature
-				));
-		
+			$headers[] = $signature;
 		}
 		else if ($this->_authmode == ChargeOverAPI::AUTHMODE_HTTP_BASIC)
 		{
@@ -106,6 +106,8 @@ class ChargeOverAPI
 		{
 			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 		}
+
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 		
@@ -143,6 +145,8 @@ class ChargeOverAPI
 	
 	public function isError($Object)
 	{
+		//print_r($Object);
+
 		if (!is_object($Object))
 		{
 			return true;
@@ -171,6 +175,9 @@ class ChargeOverAPI
 				break;
 			case 'ChargeOverAPI_Object_CreditCard':
 				$obj_type = 'creditcard';
+				break;
+			case 'ChargeOverAPI_Object_Invoice':
+				$obj_type = 'invoice';
 				break;
 		}
 		
@@ -203,8 +210,18 @@ class ChargeOverAPI
 	
 	public function modify($id, $Object)
 	{
-		
+		$uri = $this->_map(ChargeOverAPI::METHOD_MODIFY, $id, $Object);
+
+		return $this->_request('PUT', $uri, $Object->toArray());
 	}
 	
-	
+	public function find($type, $where)
+	{
+
+	}
+
+	public function findById($type, $id)
+	{
+
+	}
 }
