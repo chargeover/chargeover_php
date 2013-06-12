@@ -7,6 +7,13 @@ if (!defined('JSON_PRETTY_PRINT'))
 
 class ChargeOverAPI_Object
 {
+	const TYPE_CUSTOMER = 'customer';
+	const TYPE_BILLINGPACKAGE = 'billing_package';
+	const TYPE_USER = 'user';
+	const TYPE_ITEM = 'item';
+	const TYPE_INVOICE = 'invoice';
+	const TYPE_CREDITCARD = 'creditcard';
+
 	protected $_arr;
 	
 	public function __construct($arr = array())

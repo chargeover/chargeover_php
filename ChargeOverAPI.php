@@ -17,6 +17,7 @@ class ChargeOverAPI
 	const METHOD_MODIFY = 'modify';
 	const METHOD_DELETE = 'delete';
 	const METHOD_GET = 'get';
+	const METHOD_FIND = 'find';
 	
 	const STATUS_OK = 'OK';
 	const STATUS_ERROR = 'Error';
@@ -114,7 +115,11 @@ class ChargeOverAPI
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 		
 		// Build last request string
-		$this->_last_request = $method . ' ' . $endpoint . "\r\n\r\n" . json_encode($data);
+		$this->_last_request = $method . ' ' . $endpoint . "\r\n\r\n";
+		if ($data)
+		{
+			$this->_last_request .= json_encode($data);
+		}
 		
 		$out = curl_exec($ch);
 		
@@ -161,26 +166,34 @@ class ChargeOverAPI
 		return false;
 	}
 	
-	protected function _map($method, $id, $Object)
+	protected function _map($method, $id, $Object_or_obj_type)
 	{
-		$obj_type = '';
-		switch (get_class($Object))
+		if (is_object($Object_or_obj_type))
 		{
-			case 'ChargeOverAPI_Object_Customer':
-				$obj_type = 'customer';
-				break;
-			case 'ChargeOverAPI_Object_User':
-				$obj_type = 'user';
-				break;
-			case 'ChargeOverAPI_Object_BillingPackage':
-				$obj_type = 'billing_package';
-				break;
-			case 'ChargeOverAPI_Object_CreditCard':
-				$obj_type = 'creditcard';
-				break;
-			case 'ChargeOverAPI_Object_Invoice':
-				$obj_type = 'invoice';
-				break;
+			$obj_type = '';
+
+			switch (get_class($Object_or_obj_type))
+			{
+				case 'ChargeOverAPI_Object_Customer':
+					$obj_type = ChargeOverAPI_Object::TYPE_CUSTOMER;
+					break;
+				case 'ChargeOverAPI_Object_User':
+					$obj_type = ChargeOverAPI_Object::TYPE_USER;
+					break;
+				case 'ChargeOverAPI_Object_BillingPackage':
+					$obj_type = ChargeOverAPI_Object::TYPE_BILLINGPACKAGE;
+					break;
+				case 'ChargeOverAPI_Object_CreditCard':
+					$obj_type = ChargeOverAPI_Object::TYPE_CREDITCARD;
+					break;
+				case 'ChargeOverAPI_Object_Invoice':
+					$obj_type = ChargeOverAPI_Object::TYPE_INVOICE;
+					break;
+			}
+		}
+		else
+		{
+			$obj_type = $Object_or_obj_type;
 		}
 		
 		if ($method == ChargeOverAPI::METHOD_CREATE)
@@ -219,11 +232,22 @@ class ChargeOverAPI
 	
 	public function find($type, $where)
 	{
+		$uri = $this->_map(ChargeOverAPI::METHOD_FIND, null, $type);
 
+		foreach ($where as $key => $value)
+		{
+			$where[$key] = urlencode($value);
+		}
+
+		$uri .= '?where=' . implode(',', $where);
+
+		return $this->_request('GET', $uri);
 	}
 
 	public function findById($type, $id)
 	{
+		$uri = $this->_map(ChargeOverAPI::METHOD_FIND, $id, $type);
 
+		return $this->_request('GET', $uri);
 	}
 }
