@@ -189,6 +189,9 @@ class ChargeOverAPI
 				case 'ChargeOverAPI_Object_Invoice':
 					$obj_type = ChargeOverAPI_Object::TYPE_INVOICE;
 					break;
+				case 'ChargeOverAPI_Object_Transaction':
+					$obj_type = ChargeOverAPI_Object::TYPE_TRANSACTION;
+					break;
 			}
 		}
 		else

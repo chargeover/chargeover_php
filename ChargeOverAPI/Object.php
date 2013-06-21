@@ -13,6 +13,7 @@ class ChargeOverAPI_Object
 	const TYPE_ITEM = 'item';
 	const TYPE_INVOICE = 'invoice';
 	const TYPE_CREDITCARD = 'creditcard';
+	const TYPE_TRANSACTION = 'transaction';
 
 	protected $_arr;
 	
