@@ -18,6 +18,7 @@ class ChargeOverAPI
 	const METHOD_DELETE = 'delete';
 	const METHOD_GET = 'get';
 	const METHOD_FIND = 'find';
+	const METHOD_ACTION = 'action';
 	
 	const STATUS_OK = 'OK';
 	const STATUS_ERROR = 'Error';
@@ -219,6 +220,15 @@ class ChargeOverAPI
 		
 	}
 	
+	public function action($type, $id, $action, $data = array())
+	{
+		$uri = $this->_map(ChargeOverAPI::METHOD_ACTION, $id, $type);
+
+		$uri .= '?action=' . $action;
+
+		return $this->_request('POST', $uri, $data);
+	}
+
 	public function create($Object)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_CREATE, null, $Object);
