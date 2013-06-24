@@ -9,14 +9,19 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'WQnDGXPaBOhcK0e2Au7tvwHkMXPaBOhcK0e2qrsY5bS';
-$password = 'C05d6Tpz3LEo2RUhNwWC05d6Tpz3LEVKFcJa4bqAGYk';
+$username = '0Dx9dnKrTOR3QlItAoBiULgSwvzVqC2e';
+$password = 'OV20hDLzlSTvbsP34J5dUEotI6qmBFyk';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-//Find a customer by the ChargeOver customer ID
-$resp = $API->findById('customer', '8');
+//Find a customer by the external key
+//$resp = $API->find('customer', array('external_key:EQUALS:XFTE-KEY'));
 
+//Get all customers from MN
+//$resp = $API->find('customer', array('bill_state:EQUALS:MN'));
+
+//Get customers by email address and located in MN
+$resp = $API->find('customer', array('email:EQUALS:mike@example.com', 'bill_state:EQUALS:MN'));
 
 /*
 print("\n\n\n\n");

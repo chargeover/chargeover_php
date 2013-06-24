@@ -4,7 +4,9 @@ header('Content-Type: text/plain');
 
 require('../ChargeOverAPI.php');
 
-//$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/saas/signup/api/v3';
+//This url should be specific to your ChargeOver instance
+$url = 'http://dev.chargeover.com/api/v3';
+//$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
 $username = 'h2YwHWe8TA1J64la7rNx0EtdFjmOCnRV';
