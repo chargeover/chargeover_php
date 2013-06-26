@@ -243,7 +243,7 @@ class ChargeOverAPI
 		return $this->_request('PUT', $uri, $Object->toArray());
 	}
 	
-	public function find($type, $where)
+	public function find($type, $where, $offset = 0, $limit = null)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_FIND, null, $type);
 
@@ -253,6 +253,11 @@ class ChargeOverAPI
 		}
 
 		$uri .= '?where=' . implode(',', $where);
+
+		if ($offset or $limit)
+		{
+			$uri .= '&offset=' . ((int) $offset) . '&limit=' . ((int) $limit);
+		}
 
 		return $this->_request('GET', $uri);
 	}
