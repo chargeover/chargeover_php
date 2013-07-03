@@ -262,6 +262,13 @@ class ChargeOverAPI
 		return $this->_request('GET', $uri);
 	}
 
+	public function delete($type, $id)
+	{
+		$uri = $this->_map(ChargeOverAPI::METHOD_DELETE, $id, $type);
+
+		return $this->_request('DELETE', $uri);
+	}
+
 	public function findById($type, $id)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_FIND, $id, $type);
