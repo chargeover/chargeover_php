@@ -9,32 +9,34 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'h2YwHWe8TA1J64la7rNx0EtdFjmOCnRV';
-$password = '0iYhcWp7O1xReqLd4vwJNuDXF2gmlZ86';
+$username = '7sutWFEO2zKVYIGmZMJ3Nij5hfLxDRb8';
+$password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$User = new ChargeOverAPI_Object_User(array(
-	'customer_id' => $customer_id, //Must be the customer ID of an existing customer in ChargeOver
+$customer_id = 1560;
 
-	'name' => 'Jean-Claude Van Damme',
-	'email' => 'jean-claude@vandamme.com',
-	'username' => 'my_username_' . mt_rand(0, 1000),
-	'password' => 'password',
-));
+$CreditCard = new ChargeOverAPI_Object_CreditCard(array(
+	'customer_id' => $customer_id, // Must be the customer ID of an existing customer in ChargeOver
 
-$resp = $API->create($User);
+	'number' => '4111 1111 1111 1111', 
+	'expdate_year' => '2016', 
+	'expdate_month' => '11', 
+	'name' => 'John Doe', 
+
+	));
+
+$resp = $API->create($CreditCard);
 
 if (!$API->isError($resp))
 {
-	$customer_id = $resp->response->id;
-	print('SUCCESS! User # is: ' . $customer_id);
-
-
+	$creditcard_id = $resp->response->id;
+	
+	print('SUCCESS! Stored credit card as creditcard_id #: ' . $creditcard_id);
 }
 else
 {
-	print('error saving user via API');
+	print('Error saving credit card via API!');
 
 	print($API->lastResponse());
 }
