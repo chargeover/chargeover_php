@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Example of creating an invoice, and then paying it using a credit card 
+ * Example of creating an invoice, and then paying it using an ACH/eCheck payment
  *
  * 
  */

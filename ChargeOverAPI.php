@@ -227,6 +227,11 @@ class ChargeOverAPI
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_ACTION, $id, $type);
 
+		if (is_object($data))
+		{
+			$data = $data->toArray();
+		}
+
 		$uri .= '?action=' . $action;
 
 		return $this->_request('POST', $uri, $data);
