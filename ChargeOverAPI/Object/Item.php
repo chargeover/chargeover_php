@@ -1,6 +1,6 @@
 <?php
 
-class ChargeOverAPI_Object_ServicePlan extends ChargeOverAPI_Object
+class ChargeOverAPI_Object_Item extends ChargeOverAPI_Object
 {
 	
 }
