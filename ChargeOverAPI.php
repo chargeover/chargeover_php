@@ -112,7 +112,6 @@ class ChargeOverAPI
 		}
 
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 		
 		// Build last request string
@@ -123,6 +122,9 @@ class ChargeOverAPI
 		}
 		
 		$out = curl_exec($ch);
+		$info = curl_getinfo($ch);
+
+		curl_close($ch);
 		
 		// Log last response
 		$this->_last_response = $out;
@@ -133,7 +135,21 @@ class ChargeOverAPI
 			return false;
 		}
 		
-		return json_decode($out);
+		$data = json_decode($out);
+
+		if (json_last_error() == JSON_ERROR_NONE)
+		{
+			// We at least got back a valid JSON object
+			return $data;
+		}
+
+		// The response we got back wasn't valid JSON...? 
+		return json_decode(json_encode(array( 
+			'code' => 500, 			// let's force this to a 500 error instead, it's non-recoverable    $info['http_code'],
+			'status' => ChargeOverAPI::STATUS_ERROR, 
+			'message' => 'Server returned an invalid JSON response: ' . $out . ', JSON parser returned error: ' . json_last_error(), 
+			'response' => null, 
+			)));
 	}
 	
 	public function lastRequest()

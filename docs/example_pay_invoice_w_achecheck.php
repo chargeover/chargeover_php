@@ -41,7 +41,7 @@ if (!$API->isError($resp))
 	print('Created new invoice # ' . $invoice_id . '... now let\'s try to pay for it!' . "\n");
 
 	// Now that we've created the invoice, let's try to immediately pay for it 
-	//	using a credit card. 
+	//	using an ACH debit/eCheck.
 
 	// Create the credit card object
 	$Ach = new ChargeOverAPI_Object_Ach(array(
