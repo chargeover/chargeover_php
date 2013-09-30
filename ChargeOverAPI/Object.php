@@ -15,6 +15,7 @@ class ChargeOverAPI_Object
 	const TYPE_CREDITCARD = 'creditcard';
 	const TYPE_TRANSACTION = 'transaction';
 	const TYPE_ACH = 'ach';
+	const TYPE_USAGE = 'usage';
 
 	protected $_arr;
 	
@@ -51,12 +52,14 @@ class ChargeOverAPI_Object
 		{
 			if ($method{$i} >= 'A' and $method{$i} <= 'Z')
 			{
-				$parts[] = substr($method, $last, $i);
+				$parts[] = substr($method, $last, $i - $last);
 				$last = $i;
 			}
 		}
 
 		$parts[] = substr($method, $last);
+
+		//print_r($parts);
 
 		return strtolower(trim(implode('_', $parts), '_'));
 	}
@@ -93,6 +96,9 @@ class ChargeOverAPI_Object
 		else if (substr($name, 0, 3) == 'get')
 		{
 			$field = ChargeOverAPI_Object::transformMethodToField($name);
+
+			//print('transformed [' . $name . ' to ' . $field . ']' . "\n");
+
 			if (array_key_exists($field, $this->_arr))
 			{
 				return $this->_arr[$field];
