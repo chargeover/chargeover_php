@@ -397,7 +397,16 @@ class ChargeOverAPI
 
 		$uri = $this->_map(ChargeOverAPI::METHOD_FIND, $id, $type);
 
-		return $this->_request('GET', $uri);
+		$resp = $this->_request('GET', $uri);
+
+		if (!$this->isError($resp))
+		{
+			$class = $this->typeToClass($type);
+
+			$resp->response = $this->_createObject($class, $resp->response);
+		}
+
+		return $resp;
 	}
 
 	protected function _createObject($class, $arr_or_obj)
@@ -413,6 +422,23 @@ class ChargeOverAPI
 			if (is_array($value))
 			{
 				// This is a child
+				switch ($key)
+				{
+					case 'line_items':
+						$sclass = 'ChargeOverAPI_Object_LineItem';
+						break;
+					default:
+						$sclass = null;
+						break;
+				}
+
+				foreach ($value as $skey => $obj)
+				{
+					if ($sclass)
+					{
+						$arr[$key][$skey] = new $sclass($obj);
+					}
+				}
 			}
 			else
 			{

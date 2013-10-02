@@ -99,7 +99,17 @@ class ChargeOverAPI_Object
 
 			//print('transformed [' . $name . ' to ' . $field . ']' . "\n");
 
-			if (array_key_exists($field, $this->_arr))
+			if (array_key_exists(0, $args) and 			// Trying to get a specific element, e.g.   getLineItems(2) 
+				is_numeric($args[0]))
+			{
+				if (!empty($this->_arr[$field][$args[0]]))
+				{
+					return $this->_arr[$field][$args[0]];
+				}
+
+				return null;
+			}
+			else if (array_key_exists($field, $this->_arr))
 			{
 				return $this->_arr[$field];
 			}
