@@ -111,6 +111,7 @@ class ChargeOverAPI_Object
 			}
 			else if (array_key_exists($field, $this->_arr))
 			{
+				//print('field [' . $field . ']');
 				return $this->_arr[$field];
 			}
 

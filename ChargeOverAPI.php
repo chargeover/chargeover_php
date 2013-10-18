@@ -413,12 +413,17 @@ class ChargeOverAPI
 	{
 		if (is_object($arr_or_obj))
 		{
-			$arr = get_object_vars($arr_or_obj);
+			$arr_or_obj = get_object_vars($arr_or_obj);
 		}
 
 		// Find any children
-		foreach ($arr as $key => $value)
+		foreach ($arr_or_obj as $key => $value)
 		{
+			if (is_object($value))
+			{
+				$value = get_object_vars($value);
+			}
+
 			if (is_array($value))
 			{
 				// This is a child
@@ -426,19 +431,51 @@ class ChargeOverAPI
 				{
 					case 'line_items':
 						$sclass = 'ChargeOverAPI_Object_LineItem';
+						$is_list = true;
+						break;
+					case 'tierset':
+						$sclass = 'ChargeOverAPI_Object_Tierset';
+						$is_list = false;
+						break;
+					case 'tiers':
+						$sclass = 'ChargeOverAPI_Object_Tier';
+						$is_list = true;
 						break;
 					default:
 						$sclass = null;
+						$is_list = false;
 						break;
 				}
 
+				if ($sclass)
+				{
+					if ($is_list)
+					{
+						foreach ($value as $skey => $obj)
+						{
+							$arr_or_obj[$key][$skey] = $this->_createObject($sclass, $obj);
+						}
+					}
+					else
+					{
+						$arr_or_obj[$key] = $this->_createObject($sclass, $value);
+					}
+				}
+
+				/*
 				foreach ($value as $skey => $obj)
 				{
 					if ($sclass)
 					{
+						if (is_object($obj))
+						{
+							$obj = get_object_vars($obj);
+						}
+
 						$arr[$key][$skey] = new $sclass($obj);
 					}
 				}
+				*/
 			}
 			else
 			{
@@ -446,6 +483,6 @@ class ChargeOverAPI
 			}
 		}
 
-		return new $class($arr);
+		return new $class($arr_or_obj);
 	}
 }
