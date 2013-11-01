@@ -22,6 +22,11 @@ class ChargeOverAPI
 	
 	const STATUS_OK = 'OK';
 	const STATUS_ERROR = 'Error';
+
+	const FLAG_QUICKBOOKS = '_flag_quickbooks';
+	const FLAG_EMAILS = '_flag_emails';
+	const FLAG_WEBHOOKS = '_flag_webhooks';
+	const FLAG_EVENTS = '_flag_events';
 	
 	protected $_url;
 	protected $_authmode;
@@ -31,8 +36,10 @@ class ChargeOverAPI
 	protected $_last_request;
 	protected $_last_response;
 	protected $_last_error;
+
+	protected $_flags;
 	
-	public function __construct($url, $authmode, $username, $password)
+	public function __construct($url, $authmode, $username, $password, $flags = array())
 	{
 		$this->_url = rtrim($url, '/');
 		$this->_authmode = $authmode;
@@ -43,7 +50,7 @@ class ChargeOverAPI
 		$this->_last_response = null;
 		$this->_last_error = null;
 		
-		
+		$this->_flags = (array) $flags;
 	}
 	
 	protected function _signature($public, $private, $url, $data)
@@ -66,6 +73,18 @@ class ChargeOverAPI
 		$private = $this->_password;
 		
 		$endpoint = $this->_url . '/' . ltrim($uri, '/');
+
+		if (count($this->_flags))
+		{
+			if (false === strpos($endpoint, '?'))
+			{
+				$endpoint .= '?' . http_build_query($this->_flags);
+			}
+			else
+			{
+				$endpoint .= '&' . http_build_query($this->_flags);
+			}
+		}
 		
 		/*
 		if (false === strpos($endpoint, '?'))
@@ -163,6 +182,11 @@ class ChargeOverAPI
 			'message' => $err, 
 			'response' => null, 
 			)));
+	}
+
+	public function flag($flag, $value)
+	{
+		$this->_flags[$flag] = (int) $value;
 	}
 
 	public function lastRequest()
