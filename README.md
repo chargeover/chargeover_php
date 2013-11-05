@@ -17,6 +17,7 @@ ChargeOver developer documentation:
 
 * REST API: http://chargeover.com/docs/rest-api.html
 * Webhooks: http://chargeover.com/docs/advanced/webhooks.html
+* Example code: https://github.com/chargeover/chargeover_php/tree/master/docs
 
 
 ChargeOver developer account sign-up:
