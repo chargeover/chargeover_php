@@ -29,3 +29,6 @@ ChargeOver main documentation:
 * http://chargeover.com/docs/
 
 
+ChargeOver API access in other programming languages:
+
+* https://github.com/chargeover/
