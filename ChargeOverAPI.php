@@ -10,6 +10,9 @@ ChargeOverAPI_Loader::import('/ChargeOverAPI/Object/');
 
 class ChargeOverAPI
 {
+	const ERROR_UNKNOWN = -1;
+	const ERROR_RESPONSE = -2;
+
 	const AUTHMODE_SIGNATURE_V1 = 'signature-v1';
 	const AUTHMODE_HTTP_BASIC = 'http-basic';
 	
@@ -63,6 +66,8 @@ class ChargeOverAPI
 		
 		$str = $public . '||' . strtolower($url) . '||' . $nonce . '||' . $time . '||' . $data;
 		$signature = hash_hmac('sha256', $str, $private);
+
+		//print('lib {   ' . $str . '   }' . "\n\n");
 		
 		return 'Authorization: ChargeOver co_public_key="' . $public . '" co_nonce="' . $nonce . '" co_timestamp="' . $time . '" co_signature_method="HMAC-SHA256" co_version="1.0" co_signature="' . $signature . '" ';
 	}
@@ -102,6 +107,12 @@ class ChargeOverAPI
 		
 		// create a new cURL resource
 		$ch = curl_init();
+
+		if ($data)
+		{
+			$data = json_encode($data);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		}
 		
 		if ($this->_authmode == ChargeOverAPI::AUTHMODE_SIGNATURE_V1)
 		{
@@ -125,11 +136,6 @@ class ChargeOverAPI
 		
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json' ));
 		
-		if ($data)
-		{
-			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-		}
-
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_method);
 		
@@ -150,8 +156,8 @@ class ChargeOverAPI
 		
 		if (!$out)
 		{
-			$this->_last_error = 'Problem hitting URL [' . $endpoint . ']: ' . print_r(curl_getinfo($ch), true);
-			return false;
+			$err = 'Problem hitting URL [' . $endpoint . ']: ' . print_r(curl_getinfo($ch), true);
+			return $this->_error($err, ChargeOverAPI::ERROR_UNKNOWN);
 		}
 		
 		$data = json_decode($out);
@@ -161,20 +167,20 @@ class ChargeOverAPI
 			// We at least got back a valid JSON object
 			if ($data->status != ChargeOverAPI::STATUS_OK)
 			{
-				$this->_last_error = $data->message;
+				return $this->_error($data->message, $data->code);
 			}
 
 			return $data;
 		}
 
 		$err = 'Server returned an invalid JSON response: ' . $out . ', JSON parser returned error: ' . json_last_error();
-		$this->_last_error = $err;
-
-		return $this->_error($err, 500);
+		return $this->_error($err, ChargeOverAPI::ERROR_RESPONSE);
 	}
 	
 	protected function _error($err, $code = 400)
 	{
+		$this->_last_error = $err; 
+
 		// The response we got back wasn't valid JSON...? 
 		return json_decode(json_encode(array( 
 			'code' => $code, 			// let's force this to a 400 error instead, it's non-recoverable    $info['http_code'],
