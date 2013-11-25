@@ -23,7 +23,7 @@ header('Content-Type: text/plain');
 require '../ChargeOverAPI.php';
 
 //This url should be specific to your ChargeOver instance
-$url = 'http://macbookpro.chargeover.com:8888/chargeover/signup/api/v3.php';
+$url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_SIGNATURE_V1;

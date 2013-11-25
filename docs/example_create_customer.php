@@ -9,16 +9,14 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = '7sutWFEO2zKVYIGmZMJ3Nij5hfLxDRb8';
-$password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
+$username = 'D32sNtOnjUwlghSHrXFbv5aWz9MqfKk6';
+$password = 'CkIU5sv0fqVYom2hwi1n7lpHJtEOBWg9';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $Customer = new ChargeOverAPI_Object_Customer(array(
 	'company' => 'Test API Company, LLC',
-	'email' => 'asdgagd@asdgasdg.com',
-	'phone' => '888-555-1212',
-
+	
 	'bill_addr1' => '123 ChargeOver Street',
 	'bill_addr2' => 'Suite 10',
 	'bill_city' => 'Minneapolis',
