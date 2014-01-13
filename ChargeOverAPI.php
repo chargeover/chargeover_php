@@ -295,42 +295,6 @@ class ChargeOverAPI
 
 	protected function _typeClassMap()
 	{
-		/*
-		if (is_object($Object_or_obj_type))
-		{
-			$obj_type = '';
-
-			switch (get_class($Object_or_obj_type))
-			{
-				case 'ChargeOverAPI_Object_Customer':
-					$obj_type = ChargeOverAPI_Object::TYPE_CUSTOMER;
-					break;
-				case 'ChargeOverAPI_Object_User':
-					$obj_type = ChargeOverAPI_Object::TYPE_USER;
-					break;
-				case 'ChargeOverAPI_Object_BillingPackage':
-					$obj_type = ChargeOverAPI_Object::TYPE_BILLINGPACKAGE;
-					break;
-				case 'ChargeOverAPI_Object_CreditCard':
-					$obj_type = ChargeOverAPI_Object::TYPE_CREDITCARD;
-					break;
-				case 'ChargeOverAPI_Object_Invoice':
-					$obj_type = ChargeOverAPI_Object::TYPE_INVOICE;
-					break;
-				case 'ChargeOverAPI_Object_Transaction':
-					$obj_type = ChargeOverAPI_Object::TYPE_TRANSACTION;
-					break;
-				case 'ChargeOverAPI_Object_Ach':
-					$obj_type = ChargeOverAPI_Object::TYPE_ACH;
-					break;
-			}
-		}
-		else
-		{
-			$obj_type = $Object_or_obj_type;
-		}
-		*/
-
 		return array(
 			ChargeOverAPI_Object::TYPE_CUSTOMER => 'ChargeOverAPI_Object_Customer', 
 			ChargeOverAPI_Object::TYPE_USER => 'ChargeOverAPI_Object_User', 
@@ -340,6 +304,7 @@ class ChargeOverAPI
 			ChargeOverAPI_Object::TYPE_TRANSACTION => 'ChargeOverAPI_Object_Transaction', 
 			ChargeOverAPI_Object::TYPE_ACH => 'ChargeOverAPI_Object_Ach', 
 			ChargeOverAPI_Object::TYPE_USAGE => 'ChargeOverAPI_Object_Usage', 
+			ChargeOverAPI_Object::TYPE_ITEM => 'ChargeOverAPI_Object_Item', 
 			);
 	}
 	

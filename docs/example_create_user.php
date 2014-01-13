@@ -33,11 +33,11 @@ $resp = $API->create($User);
 if (!$API->isError($resp))
 {
 	$user_id = $resp->response->id;
-	print('SUCCESS! User # is: ' . $user_id);
+	print('SUCCESS! User/contact # is: ' . $user_id);
 }
 else
 {
-	print('Error saving customer via API');
+	print('Error saving user/contact via API');
 
 	print($API->lastResponse());
 }
