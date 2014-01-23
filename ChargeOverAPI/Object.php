@@ -16,6 +16,7 @@ class ChargeOverAPI_Object
 	const TYPE_TRANSACTION = 'transaction';
 	const TYPE_ACH = 'ach';
 	const TYPE_USAGE = 'usage';
+	const TYPE_NOTE = 'note';
 
 	protected $_arr;
 	

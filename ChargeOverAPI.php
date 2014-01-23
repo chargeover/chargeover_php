@@ -305,6 +305,7 @@ class ChargeOverAPI
 			ChargeOverAPI_Object::TYPE_ACH => 'ChargeOverAPI_Object_Ach', 
 			ChargeOverAPI_Object::TYPE_USAGE => 'ChargeOverAPI_Object_Usage', 
 			ChargeOverAPI_Object::TYPE_ITEM => 'ChargeOverAPI_Object_Item', 
+			ChargeOverAPI_Object::TYPE_NOTE => 'ChargeOverAPI_Object_Note', 
 			);
 	}
 	
@@ -341,16 +342,35 @@ class ChargeOverAPI
 		return $this->_request('PUT', $uri, $Object->toArray());
 	}
 	
-	public function find($type, $where, $offset = 0, $limit = null)
+	public function find($type, $where = array(), $sort = array(), $offset = 0, $limit = null)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_FIND, null, $type);
 
-		foreach ($where as $key => $value)
+		$uri .= '?_dummy=1';
+
+		// WHERE 
+		if (is_array($where) and 
+			count($where))
 		{
-			$where[$key] = urlencode($value);
+			foreach ($where as $key => $value)
+			{
+				$where[$key] = urlencode($value);
+			}
 		}
 
-		$uri .= '?where=' . implode(',', $where);
+		$uri .= '&where=' . implode(',', $where);
+
+		// ORDER 
+		if (is_array($sort) and 
+			count($sort))
+		{
+			foreach ($sort as $key => $value)
+			{
+				$sort[$key] = urlencode($value);
+			}
+		}
+
+		$uri .= '&order=' . implode(',', $sort);
 
 		if ($offset or $limit)
 		{
