@@ -6,6 +6,8 @@ require_once CHARGEOVERAPI_BASEDIR . '/ChargeOverAPI/Loader.php';
 
 ChargeOverAPI_Loader::load('/ChargeOverAPI/Object.php');
 
+ChargeOverAPI_Loader::load('/ChargeOverAPI/Aggregate.php');
+
 ChargeOverAPI_Loader::import('/ChargeOverAPI/Object/');
 
 class ChargeOverAPI
@@ -22,6 +24,7 @@ class ChargeOverAPI
 	const METHOD_GET = 'get';
 	const METHOD_FIND = 'find';
 	const METHOD_ACTION = 'action';
+	const METHOD_AGGREGATE = 'aggregate';
 	
 	const STATUS_OK = 'OK';
 	const STATUS_ERROR = 'Error';
@@ -236,6 +239,11 @@ class ChargeOverAPI
 	 */
 	protected function _map($method, $id, $Object_or_obj_type)
 	{
+		if ($method == ChargeOverAPI::METHOD_AGGREGATE)
+		{
+			return 'aggregate';
+		}
+
 		if (is_object($Object_or_obj_type))
 		{
 			$obj_type = $this->classToType($Object_or_obj_type);
@@ -314,6 +322,13 @@ class ChargeOverAPI
 		
 	}
 	
+	public function aggregate($Aggregate)
+	{
+		$uri = $this->_map(ChargeOverAPI::METHOD_AGGREGATE, null, null);
+		
+		return $this->_request('POST', $uri, $Aggregate->toArray());
+	}
+
 	public function action($type, $id, $action, $data = array())
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_ACTION, $id, $type);
