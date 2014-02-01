@@ -42,3 +42,6 @@ else
 	print($API->lastRequest() . "\n\n");
 	print($API->lastResponse() . "\n\n");
 }
+
+print($API->lastRequest() . "\n\n");
+	print($API->lastResponse() . "\n\n");
