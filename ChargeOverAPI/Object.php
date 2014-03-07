@@ -18,11 +18,15 @@ class ChargeOverAPI_Object
 	const TYPE_USAGE = 'usage';
 	const TYPE_NOTE = 'note';
 
-	protected $_arr;
+	//protected $_arr;
 	
 	public function __construct($arr = array())
 	{
-		$this->_arr = $arr;
+		//$this->_arr = $arr;
+		foreach ($arr as $key => $value)
+		{
+			$this->$key = $value;
+		}
 	}
 	
 	/**
@@ -91,7 +95,8 @@ class ChargeOverAPI_Object
 		if (substr($name, 0, 3) == 'set')
 		{
 			$field = ChargeOverAPI_Object::transformMethodToField($name);
-			$this->_arr[$field] = current($args);
+			//$this->_arr[$field] = current($args);
+			$this->$field = current($args);
 			return true;
 		}
 		else if (substr($name, 0, 3) == 'get')
@@ -103,17 +108,20 @@ class ChargeOverAPI_Object
 			if (array_key_exists(0, $args) and 			// Trying to get a specific element, e.g.   getLineItems(2) 
 				is_numeric($args[0]))
 			{
-				if (!empty($this->_arr[$field][$args[0]]))
+				//if (!empty($this->_arr[$field][$args[0]]))
+				if (!empty($this->$field[$args[0]]))
 				{
-					return $this->_arr[$field][$args[0]];
+					return $this->$field[$args[0]];
+					//return $this->_arr[$field][$args[0]];
 				}
 
 				return null;
 			}
-			else if (array_key_exists($field, $this->_arr))
+			//else if (array_key_exists($field, $this->_arr))
+			else if (property_exists($this, $field))
 			{
-				//print('field [' . $field . ']');
-				return $this->_arr[$field];
+				return $this->$field;
+				//return $this->_arr[$field];
 			}
 
 			return null;
@@ -122,13 +130,16 @@ class ChargeOverAPI_Object
 		{
 			$field = ChargeOverAPI_Object::transformMethodToField($name);
 
-			if (!isset($this->_arr[$field]))
+			//if (!isset($this->_arr[$field]))
+			if (!isset($this->$field))
 			{
-				$this->_arr[$field] = array();
+				//$this->_arr[$field] = array();
+				$this->$field = array();
 			}
 
 			$Obj = current($args);
-			$this->_arr[$field][] = $Obj;
+			//$this->_arr[$field][] = $Obj;
+			array_push($this->$field, $Obj);
 		}
 	}
 
@@ -151,14 +162,16 @@ class ChargeOverAPI_Object
 
 	protected function toJSON()
 	{
-		$arr = $this->_massage($this->_arr);
+		$vars = get_object_vars($this);
+		$arr = $this->_massage($vars);
 		
 		return json_encode($arr, JSON_PRETTY_PRINT);
 	}
 
 	public function toArray()
 	{
-		return $this->_massage($this->_arr);
+		$vars = get_object_vars($this);
+		return $this->_massage($vars);
 	}
 
 	public function __toString()
