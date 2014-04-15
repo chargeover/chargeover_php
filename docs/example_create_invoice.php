@@ -9,16 +9,16 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = '7sutWFEO2zKVYIGmZMJ3Nij5hfLxDRb8';
-$password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
+$username = 'Q3putY0lSXn9OKNg15a4x8sHmBUjDWVh';
+$password = 'u1tfwimpXGg8bdWELMzPrHxVFZe9DKNj';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $Invoice = new ChargeOverAPI_Object_Invoice();
-$Invoice->setCustomerId(1529);
+$Invoice->setCustomerId(141);
 
 $LineItem = new ChargeOverAPI_Object_LineItem();
-$LineItem->setItemId(303);
+$LineItem->setItemId(4);
 $LineItem->setLineRate(29.95);
 $LineItem->setLineQuantity(3);
 $LineItem->setDescrip('Test of a description goes here.');

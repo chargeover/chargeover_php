@@ -9,8 +9,8 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'WQnDGXPaBOhcK0e2Au7tvwHkMXPaBOhcK0e2qrsY5bS';
-$password = 'C05d6Tpz3LEo2RUhNwWC05d6Tpz3LEVKFcJa4bqAGYk';
+$username = 'Q3putY0lSXn9OKNg15a4x8sHmBUjDWVh';
+$password = 'u1tfwimpXGg8bdWELMzPrHxVFZe9DKNj';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
@@ -32,7 +32,10 @@ if (!$API->isError($resp))
 
 	foreach ($customers as $customer)
 	{
-		print('Customer ID: ' . $customer->customer_id . ' Name: ' . $customer->company . "\n");
+		//print_r($customer);
+		print('Customer ID: ' . $customer->customer_id . ', Name: ' . $customer->company . "\n");
+		print('    You can also use ->get*() methods: ' . $customer->getCustomerId() . ', Name: ' . $customer->getCompany() . "\n");
+		print("\n");
 	}
 	
 }

@@ -9,8 +9,8 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'D32sNtOnjUwlghSHrXFbv5aWz9MqfKk6';
-$password = 'CkIU5sv0fqVYom2hwi1n7lpHJtEOBWg9';
+$username = 'Q3putY0lSXn9OKNg15a4x8sHmBUjDWVh';
+$password = 'u1tfwimpXGg8bdWELMzPrHxVFZe9DKNj';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
