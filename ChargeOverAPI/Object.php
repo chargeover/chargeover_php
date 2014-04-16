@@ -11,6 +11,7 @@ class ChargeOverAPI_Object
 	const TYPE_BILLINGPACKAGE = 'billing_package';
 	const TYPE_USER = 'user';
 	const TYPE_ITEM = 'item';
+	const TYPE_ITEMCATEGORY = 'item_category';
 	const TYPE_INVOICE = 'invoice';
 	const TYPE_CREDITCARD = 'creditcard';
 	const TYPE_TRANSACTION = 'transaction';
