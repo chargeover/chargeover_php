@@ -330,6 +330,15 @@ class ChargeOverAPI
 		return $this->_request('POST', $uri, $Aggregate->toArray());
 	}
 
+	/**
+	 * Perform an action (e.g. upgrade/downgrade, cancel, void, set payment method, etc.)
+	 * 
+	 * @param string $type
+	 * @param integer $id
+	 * @param string $action
+	 * @param array $data 
+	 * @return array
+	 */
 	public function action($type, $id, $action, $data = array())
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_ACTION, $id, $type);
@@ -348,6 +357,12 @@ class ChargeOverAPI
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_CREATE, null, $Object);
 		
+		/*
+		print('[');
+		print_r($Object);
+		print(']');
+		*/
+
 		return $this->_request('POST', $uri, $Object->toArray());
 	}
 	
