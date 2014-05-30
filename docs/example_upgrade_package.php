@@ -9,22 +9,25 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'I2L6SQd9ikRJMUtgurWzTfqOK1FoGxl7';
-$password = 'zVLXxjGZvdubmJ5WnyifhlH0gSIY3Et9';
+$username = 'o0ptJLS2zwTmMl5dRKZG9kPxYDWVCgHs';
+$password = 'WNJxUswvOFh0RbpXrC6Tut82HE9yGgPQ';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$BillingPackage = new ChargeOverAPI_Object_BillingPackage();
-$BillingPackage->setCustomerId(1);
+$data = array(
+	'line_items' => array(
+		0 => array(
+			'line_item_id' => 575, 
+			'item_id' => 1, 
+			'descrip' => 'upgraded description goes here', 
 
-$LineItem = new ChargeOverAPI_Object_LineItem();
-$LineItem->setExternalKey('abcd1234');
-$LineItem->setItemId(2);
-$LineItem->setDescrip('Test of a description goes here.');
+			'custom_1' => 'new custom 1', 
+			'external_key' => 'new-external',
+			),
+		),
+	);
 
-$BillingPackage->addLineItems($LineItem);
-
-$resp = $API->create($BillingPackage);
+$resp = $API->action('package', 565, 'upgrade', $data);
 
 /*
 print("\n\n\n\n");
@@ -36,13 +39,10 @@ print("\n\n\n\n");
 
 if (!$API->isError($resp))
 {
-	$billingpackage_id = $resp->response->id;
-	print('SUCCESS! Billing Package # is: ' . $billingpackage_id);
+	print('SUCCESS!');
 }
 else
 {
-	print('Error saving billing package via API' . "\n");
-
 	print('Error message was: ' . $resp->code . ': ' . $resp->message . "\n");
 
 	print("\n\n\n\n");

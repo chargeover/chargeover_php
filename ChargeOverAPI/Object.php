@@ -9,6 +9,8 @@ class ChargeOverAPI_Object
 {
 	const TYPE_CUSTOMER = 'customer';
 	const TYPE_BILLINGPACKAGE = 'billing_package';
+	const TYPE_PACKAGE = 'package';
+	const TYPE_PROJECT = 'project';
 	const TYPE_USER = 'user';
 	const TYPE_ITEM = 'item';
 	const TYPE_ITEMCATEGORY = 'item_category';
@@ -18,6 +20,7 @@ class ChargeOverAPI_Object
 	const TYPE_ACH = 'ach';
 	const TYPE_USAGE = 'usage';
 	const TYPE_NOTE = 'note';
+	const TYPE_COUNTRY = 'country';
 
 	//protected $_arr;
 	
