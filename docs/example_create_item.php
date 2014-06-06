@@ -20,7 +20,7 @@ $Item = new ChargeOverAPI_Object_Item(array(
 
 	'pricemodel' => array(
 		'base' => 295.95, 
-		'paycycle' => 'mon', 
+		'paycycle' => 'evy', 
 		'pricemodel' => 'fla', 
 		)
 	));
