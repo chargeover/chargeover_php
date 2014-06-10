@@ -8,6 +8,8 @@ ChargeOverAPI_Loader::load('/ChargeOverAPI/Object.php');
 
 ChargeOverAPI_Loader::load('/ChargeOverAPI/Aggregate.php');
 
+ChargeOverAPI_Loader::load('/ChargeOverAPI/Bulk.php');
+
 ChargeOverAPI_Loader::import('/ChargeOverAPI/Object/');
 
 class ChargeOverAPI
@@ -25,6 +27,7 @@ class ChargeOverAPI
 	const METHOD_FIND = 'find';
 	const METHOD_ACTION = 'action';
 	const METHOD_AGGREGATE = 'aggregate';
+	const METHOD_BULK = 'bulk';
 	
 	const STATUS_OK = 'OK';
 	const STATUS_ERROR = 'Error';
@@ -241,7 +244,11 @@ class ChargeOverAPI
 	{
 		if ($method == ChargeOverAPI::METHOD_AGGREGATE)
 		{
-			return 'aggregate';
+			return '_aggregate';
+		}
+		else if ($method == ChargeOverAPI::METHOD_BULK)
+		{
+			return '_bulk';
 		}
 
 		if (is_object($Object_or_obj_type))
@@ -320,6 +327,13 @@ class ChargeOverAPI
 	public function rawRequest($method, $uri, $data)
 	{
 		
+	}
+
+	public function bulk($Bulk)
+	{
+		$uri = $this->_map(ChargeOverAPI::METHOD_BULK, null, null);
+		
+		return $this->_request('POST', $uri, $Bulk->toArray());
 	}
 	
 	public function aggregate($Aggregate)
