@@ -314,13 +314,17 @@ class ChargeOverAPI
 			ChargeOverAPI_Object::TYPE_CUSTOMER => 'ChargeOverAPI_Object_Customer', 
 			ChargeOverAPI_Object::TYPE_USER => 'ChargeOverAPI_Object_User', 
 			ChargeOverAPI_Object::TYPE_BILLINGPACKAGE => 'ChargeOverAPI_Object_BillingPackage', 
+			ChargeOverAPI_Object::TYPE_PACKAGE => 'ChargeOverAPI_Object_Package', 
+			ChargeOverAPI_Object::TYPE_PROJECT => 'ChargeOverAPI_Object_Project', 
 			ChargeOverAPI_Object::TYPE_CREDITCARD => 'ChargeOverAPI_Object_CreditCard', 
 			ChargeOverAPI_Object::TYPE_INVOICE => 'ChargeOverAPI_Object_Invoice', 
 			ChargeOverAPI_Object::TYPE_TRANSACTION => 'ChargeOverAPI_Object_Transaction', 
 			ChargeOverAPI_Object::TYPE_ACH => 'ChargeOverAPI_Object_Ach', 
 			ChargeOverAPI_Object::TYPE_USAGE => 'ChargeOverAPI_Object_Usage', 
-			ChargeOverAPI_Object::TYPE_ITEM => 'ChargeOverAPI_Object_Item', 
+			ChargeOverAPI_Object::TYPE_ITEM => 'ChargeOverAPI_Object_Item',
+			ChargeOverAPI_Object::TYPE_ITEMCATEGORY => 'ChargeOverAPI_Object_ItemCategory', 
 			ChargeOverAPI_Object::TYPE_NOTE => 'ChargeOverAPI_Object_Note', 
+			ChargeOverAPI_Object::TYPE_COUNTRY => 'ChargeOverAPI_Object_Country', 
 			);
 	}
 	
@@ -343,6 +347,15 @@ class ChargeOverAPI
 		return $this->_request('POST', $uri, $Aggregate->toArray());
 	}
 
+	/**
+	 * Perform an action (e.g. upgrade/downgrade, cancel, void, set payment method, etc.)
+	 * 
+	 * @param string $type
+	 * @param integer $id
+	 * @param string $action
+	 * @param array $data 
+	 * @return array
+	 */
 	public function action($type, $id, $action, $data = array())
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_ACTION, $id, $type);
@@ -361,6 +374,12 @@ class ChargeOverAPI
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_CREATE, null, $Object);
 		
+		/*
+		print('[');
+		print_r($Object);
+		print(']');
+		*/
+
 		return $this->_request('POST', $uri, $Object->toArray());
 	}
 	
