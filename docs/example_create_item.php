@@ -20,8 +20,7 @@ $Item = new ChargeOverAPI_Object_Item(array(
 
 	'pricemodel' => array(
 		'base' => 295.95, 
-		'paycycle' => 'evy', 
-		'pricemodel' => 'fla', 
+		'pricemodel' => ChargeOverAPI_Object_Item::PRICEMODEL_FLAT, 
 		)
 	));
 
@@ -43,5 +42,5 @@ else
 	print($API->lastResponse() . "\n\n");
 }
 
-print($API->lastRequest() . "\n\n");
+	print($API->lastRequest() . "\n\n");
 	print($API->lastResponse() . "\n\n");
