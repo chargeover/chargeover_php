@@ -12,6 +12,10 @@ $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
 $username = 'JxI2LYptQkVDMbaFST8RNegzrqji9Wmh';
 $password = 'k5mSN0rb7KFHl4PBVDpLv2JfoG6qEQiW';
 
+$url = 'http://macbookpro.chargeover.com:8888/chargeover/signup/api/v3.php';
+$username = 'PtS50vVGLJrpEs1HmyqCi8MhjzBnc3DU';
+$password = 'u1tfwimpXGg8bdWELMzPrHxVFZe9DKNa';
+
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $Package = new ChargeOverAPI_Object_Package();

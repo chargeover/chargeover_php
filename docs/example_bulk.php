@@ -7,11 +7,10 @@ require '../ChargeOverAPI.php';
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
-$url = 'http://macbookpro.chargeover.com:8888/chargeover/signup/api/v3.php';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'PtS50vVGLJrpEs1HmyqCi8MhjzBnc3DU';
-$password = 'u1tfwimpXGg8bdWELMzPrHxVFZe9DKNa';
+$username = 'SmUWLc7H3btMKoOa24dlXYFeyBZxvRPf';
+$password = 'kr4a9vwMO8DId1lnqCKeLjbBSAuVtfPW';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
@@ -41,7 +40,7 @@ $resp = $API->bulk($Bulk);
 // Check for errors
 if (!$API->isError($resp))
 {
-	print_r($resp->response);
+	print_r($resp->response->_bulk);
 }
 else
 {
@@ -52,3 +51,10 @@ else
 	print($API->lastResponse());
 	
 }
+
+/*
+print("\n\n");
+print($API->lastRequest());
+print("\n\n");
+print($API->lastResponse());
+*/

@@ -114,16 +114,17 @@ class ChargeOverAPI
 		// create a new cURL resource
 		$ch = curl_init();
 
+		$post_data = null;
 		if ($data)
 		{
-			$data = json_encode($data);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+			$post_data = json_encode($data);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 		}
 		
 		if ($this->_authmode == ChargeOverAPI::AUTHMODE_SIGNATURE_V1)
 		{
 			// Signed requests
-			$signature = $this->_signature($public, $private, $endpoint, $data);
+			$signature = $this->_signature($public, $private, $endpoint, $post_data);
 			
 			$headers[] = $signature;
 		}
@@ -147,9 +148,9 @@ class ChargeOverAPI
 		
 		// Build last request string
 		$this->_last_request = $http_method . ' ' . $endpoint . "\r\n\r\n";
-		if ($data)
+		if ($post_data)
 		{
-			$this->_last_request .= json_encode($data);
+			$this->_last_request .= $post_data;
 		}
 		
 		$out = curl_exec($ch);
