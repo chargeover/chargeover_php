@@ -13,17 +13,16 @@ require '../ChargeOverAPI.php';
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
-$url = 'http://dev.chargeover.com/signup/api/v3.php';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = '7sutWFEO2zKVYIGmZMJ3Nij5hfLxDRb8';
-$password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
+$username = 'JxI2LYptQkVDMbaFST8RNegzrqji9Wmh';
+$password = 'k5mSN0rb7KFHl4PBVDpLv2JfoG6qEQiW';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 // This is the customer/billing package we're updating
-$customer_id = 1;
-$billing_package_id = 554;
+$customer_id = 62;
+$package_id = 599;
 
 // Create a new credit card object
 $CreditCard = new ChargeOverAPI_Object_CreditCard();
@@ -43,11 +42,17 @@ if (!$API->isError($resp))
 		'creditcard_id' => $resp->response->id, 
 		);
 
-	$resp = $API->action('billing_package', $billing_package_id, 'paymethod', $data);
+	$resp = $API->action('package', $package_id, 'paymethod', $data);
 
 	if (!$API->isError($resp))
 	{
 		print('Updated payment method!');
+
+		/*
+		print($API->lastRequest());
+		print("\n\n\n");
+		print($API->lastResponse());
+		*/
 	}
 	else
 	{
