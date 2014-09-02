@@ -18,10 +18,7 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 //$resp = $API->find('customer', array('external_key:EQUALS:XFTE-KEY'));
 
 //Get all customers from MN
-//$resp = $API->find('customer', array('bill_state:EQUALS:MN'));
-
-//Get customers by email address and located in MN
-$resp = $API->find('customer', array('email:EQUALS:mike@example.com', 'bill_state:EQUALS:MN'));
+$resp = $API->find('customer', array('bill_state:EQUALS:MN'));
 
 /*
 print("\n\n\n\n");
