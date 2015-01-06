@@ -140,6 +140,9 @@ class ChargeOverAPI
 		
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+
+		// Force TLS
+		curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
 		
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json' ));
 		

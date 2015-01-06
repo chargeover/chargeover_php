@@ -6,22 +6,26 @@ require '../ChargeOverAPI.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
+$url = 'http://macbookpro.chargeover.com:8888/chargeover/signup/api/v3.php';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'Q3putY0lSXn9OKNg15a4x8sHmBUjDWVh';
-$password = 'u1tfwimpXGg8bdWELMzPrHxVFZe9DKNj';
+$username = '6d3nS4bQEXltIwNoYTFOHWUe9Gyugirj';
+$password = 'lYEKFrnBSGZaUk9DW70huNMepfHs3cb4';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $Usage = new ChargeOverAPI_Object_Usage();
-//$Usage->setLineItemId(327);
-$Usage->setLineItemExternalKey('abc123');
-$Usage->setUsageValue(1);
+$Usage->setLineItemId(554);
+//$Usage->setLineItemExternalKey('abc123');
+$Usage->setUsageValue(mt_rand(0, 100));
 //$Usage->setFrom(date('Y-m-d 00:00:00'));
 //$Usage->setTo(date('Y-m-d 23:59:59'));
 
+$Usage->setExternalKey('1234abcd');
+
 $resp = $API->create($Usage);
+
 
 //print_r($resp);
 

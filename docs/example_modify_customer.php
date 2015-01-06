@@ -9,12 +9,12 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'JxI2LYptQkVDMbaFST8RNegzrqji9Wmh';
-$password = 'k5mSN0rb7KFHl4PBVDpLv2JfoG6qEQiW';
+$username = 'Mjay6XozbPTr0diJOWgs7YL49FBlfIUA';
+$password = 'qTD8NLlCi6BsZUA973JP5upfEHw4FXrd';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$customer_id = 60;
+$customer_id = 3;
 
 $Customer = new ChargeOverAPI_Object_Customer(array(
 	'company' => 'Test API Company, LLC',
@@ -32,9 +32,11 @@ $Customer = new ChargeOverAPI_Object_Customer(array(
 	'superuser_name' => 'David Palmer', 
 	'superuser_email' => 'david@palmer.com', 
 	'superuser_phone' => '860-634-1111', 
+	
 	));
 
 $resp = $API->modify($customer_id, $Customer);
+
 
 if (!$API->isError($resp))
 {

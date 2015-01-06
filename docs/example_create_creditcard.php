@@ -14,7 +14,7 @@ $password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$customer_id = 1560;
+$customer_id = 1;
 
 $CreditCard = new ChargeOverAPI_Object_CreditCard(array(
 	'customer_id' => $customer_id, // Must be the customer ID of an existing customer in ChargeOver
