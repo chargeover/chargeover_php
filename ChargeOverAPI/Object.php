@@ -21,6 +21,7 @@ class ChargeOverAPI_Object
 	const TYPE_USAGE = 'usage';
 	const TYPE_NOTE = 'note';
 	const TYPE_COUNTRY = 'country';
+	const TYPE_TOKENIZED = 'tokenized';
 
 	//protected $_arr;
 	
