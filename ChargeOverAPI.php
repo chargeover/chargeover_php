@@ -159,16 +159,18 @@ class ChargeOverAPI
 		$out = curl_exec($ch);
 		$info = curl_getinfo($ch);
 
-		curl_close($ch);
-		
 		// Log last response
 		$this->_last_response = $out;
 		
 		if (!$out)
 		{
 			$err = 'Problem hitting URL [' . $endpoint . ']: ' . print_r(curl_getinfo($ch), true);
+			curl_close($ch);
+
 			return $this->_error($err, ChargeOverAPI::ERROR_UNKNOWN);
 		}
+
+		curl_close($ch);
 		
 		$data = json_decode($out);
 

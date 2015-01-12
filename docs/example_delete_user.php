@@ -1,41 +1,39 @@
 <?php
 
+/**
+ * Example of deleting a customer from ChargeOver 
+ */
+
 header('Content-Type: text/plain');
 
+// Require the library 
 require '../ChargeOverAPI.php';
 
-//This url should be specific to your ChargeOver instance
+// This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
+// You should substitute your API credentials in here 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
 $username = 'sLmVGFljcKhtg7rBkAOoNaE9SwWzRYUq';
 $password = '3TI5VjyNGlwYHeBuxfcq7tbKh9PS8iAW';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$user_id = 348;
+// This is the unique user ID value 
+$the_user_id = 123348;
 
-$User = new ChargeOverAPI_Object_User(array(
-	'name' => 'Keith Palmer', 
-	'email' => 'newemail@newemail.com',
-	));
+// Delete them
+$resp = $API->delete(ChargeOverAPI_Object::TYPE_USER, $the_user_id);
 
-$resp = $API->modify($user_id, $User);
-
+// Check for errors 
 if (!$API->isError($resp))
 {
-	print('Updated the user!');
-
-	print("\n\n\n\n");
-	print($API->lastRequest());
-	print("\n\n\n\n");
-	print($API->lastResponse());
-	print("\n\n\n\n");
+	print('User was deleted!');
 }
 else
 {
-	print('Error updating user via API: ' . $resp->message);
+	print('The user COULD NOT BE DELETED!');
 
 	print("\n\n\n\n");
 	print($API->lastRequest());
