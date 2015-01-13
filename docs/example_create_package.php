@@ -9,12 +9,8 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'JxI2LYptQkVDMbaFST8RNegzrqji9Wmh';
-$password = 'k5mSN0rb7KFHl4PBVDpLv2JfoG6qEQiW';
-
-$url = 'http://macbookpro.chargeover.com:8888/chargeover/signup/api/v3.php';
-$username = 'PtS50vVGLJrpEs1HmyqCi8MhjzBnc3DU';
-$password = 'u1tfwimpXGg8bdWELMzPrHxVFZe9DKNa';
+$username = '1EkcsIZRUJwdWmyT6lzqa4Y0pXvgNKCB';
+$password = 'IZah9p134R7OLtHl26BCmFXWUjVQxsNM';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
@@ -29,6 +25,7 @@ $Package->setCustomerId(1);
 $LineItem = new ChargeOverAPI_Object_LineItem();
 $LineItem->setItemId(2);
 $LineItem->setDescrip('Test of a description goes here.');
+$LineItem->setTrialDays(20);
 
 $Package->addLineItems($LineItem);
 
