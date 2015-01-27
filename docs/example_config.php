@@ -5,7 +5,7 @@ header('Content-Type: text/plain');
 require '../ChargeOverAPI.php';
 
 //This url should be specific to your ChargeOver instance
-$url = 'http://dev.chargeover.com/api/v3';
+$url = 'http://dev.chargeover.com/signup/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
@@ -14,33 +14,26 @@ $password = '3TI5VjyNGlwYHeBuxfcq7tbKh9PS8iAW';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$user_id = 350;
 
-$User = new ChargeOverAPI_Object_User(array(
-	'name' => 'Ryan Bantz', 
-	'email' => 'newemail@newemail.com',
-	));
+// Create the user
+$resp = $API->config('chargeoverjs_token', date('YmdHis') . '_' . mt_rand());
 
-$resp = $API->modify($user_id, $User);
-
+// Check for errors
 if (!$API->isError($resp))
 {
-	print('Updated the user!');
-
-	print("\n\n\n\n");
-	print($API->lastRequest());
-	print("\n\n\n\n");
-	print($API->lastResponse());
-	print("\n\n\n\n");
+	print_r($resp->response);
 }
 else
 {
-	print('Error updating user via API: ' . $resp->message);
+	print('Error!');
 
-	print("\n\n\n\n");
 	print($API->lastRequest());
-	print("\n\n\n\n");
+	print("\n\n");
 	print($API->lastResponse());
-	print("\n\n\n\n");
+	
 }
 
+print("\n\n");
+print($API->lastRequest());
+print("\n\n");
+print($API->lastResponse());
