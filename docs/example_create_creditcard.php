@@ -9,8 +9,8 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = '7sutWFEO2zKVYIGmZMJ3Nij5hfLxDRb8';
-$password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
+$username = 'sLmVGFljcKhtg7rBkAOoNaE9SwWzRYUq';
+$password = '3TI5VjyNGlwYHeBuxfcq7tbKh9PS8iAW';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
@@ -18,6 +18,7 @@ $customer_id = 1;
 
 $CreditCard = new ChargeOverAPI_Object_CreditCard(array(
 	'customer_id' => $customer_id, // Must be the customer ID of an existing customer in ChargeOver
+	//'customer_external_key' => 'abcd12345', 
 
 	'number' => '4111 1111 1111 1111', 
 	'expdate_year' => '2016', 
@@ -41,3 +42,4 @@ else
 	print($API->lastResponse());
 }
 
+print($API->lastRequest());

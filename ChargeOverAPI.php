@@ -28,6 +28,7 @@ class ChargeOverAPI
 	const METHOD_ACTION = 'action';
 	const METHOD_AGGREGATE = 'aggregate';
 	const METHOD_BULK = 'bulk';
+	const METHOD_CONFIG = 'config';
 	
 	const STATUS_OK = 'OK';
 	const STATUS_ERROR = 'Error';
@@ -256,6 +257,10 @@ class ChargeOverAPI
 		{
 			return '_bulk';
 		}
+		else if ($method == ChargeOverAPI::METHOD_CONFIG)
+		{
+			return '_config';
+		}
 
 		if (is_object($Object_or_obj_type))
 		{
@@ -352,6 +357,13 @@ class ChargeOverAPI
 		$uri = $this->_map(ChargeOverAPI::METHOD_AGGREGATE, null, null);
 		
 		return $this->_request('POST', $uri, $Aggregate->toArray());
+	}
+
+	public function config($key = null, $value = null)
+	{
+		$uri = $this->_map(ChargeOverAPI::METHOD_CONFIG, null, null);
+
+		return $this->_request('POST', $uri, array( $key => $value ));
 	}
 
 	/**
