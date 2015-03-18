@@ -5,23 +5,26 @@ header('Content-Type: text/plain');
 require '../ChargeOverAPI.php';
 
 // This url should be specific to your ChargeOver instance
-$url = 'http://dev.chargeover.com/signup/api/v3.php';
+$url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = '7sutWFEO2zKVYIGmZMJ3Nij5hfLxDRb8';
-$password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
+$username = 'aPEDf5ehpOtJjix2lnFc7KrkqVmgHouw';
+$password = 'hrUvPdo21QG0tSLXg4u69ZfIkMa5pinY';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-
+// Get records 10 at a time, starting with the first record 
 $offset = 0;
 $limit = 10;
+
+$where = array();
+$sort = array( 'customer_id:ASC' );     // Order by customer_id 
 
 // Get all customers, 10 at a time (10 per page)
 do 
 {
-	$resp = $API->find('customer', array(), $offset, $limit);
+	$resp = $API->find('customer', $where, $sort, $offset, $limit);
 	$customers = $resp->response;
 
 	print('Showing customers ' . $offset . ' through ' . ($offset + $limit) . "\n");
