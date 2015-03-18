@@ -29,6 +29,7 @@ class ChargeOverAPI
 	const METHOD_AGGREGATE = 'aggregate';
 	const METHOD_BULK = 'bulk';
 	const METHOD_CONFIG = 'config';
+	const METHOD_CHARGEOVERJS = 'chargeoverjs';
 	
 	const STATUS_OK = 'OK';
 	const STATUS_ERROR = 'Error';
@@ -47,7 +48,11 @@ class ChargeOverAPI
 	protected $_last_response;
 	protected $_last_error;
 
+	// API flags
 	protected $_flags;
+
+	// HTTP curl options
+	protected $_http;
 	
 	public function __construct($url, $authmode, $username, $password, $flags = array())
 	{
@@ -144,6 +149,9 @@ class ChargeOverAPI
 
 		// Force TLS
 		curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
+
+		//[2/23/15, 8:14:18 AM] Keith Palmer Jr: curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		//[2/23/15, 8:14:30 AM] Keith Palmer Jr: curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 		
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json' ));
 		
@@ -165,7 +173,7 @@ class ChargeOverAPI
 		
 		if (!$out)
 		{
-			$err = 'Problem hitting URL [' . $endpoint . ']: ' . print_r(curl_getinfo($ch), true);
+			$err = 'Problem hitting URL [' . $endpoint . ']: ' . curl_error($ch) . ', ' . print_r(curl_getinfo($ch), true);
 			curl_close($ch);
 
 			return $this->_error($err, ChargeOverAPI::ERROR_UNKNOWN);
@@ -201,6 +209,11 @@ class ChargeOverAPI
 			'message' => $err, 
 			'response' => null, 
 			)));
+	}
+
+	public function http($opt, $value)
+	{
+
 	}
 
 	public function flag($flag, $value)
@@ -364,6 +377,21 @@ class ChargeOverAPI
 		$uri = $this->_map(ChargeOverAPI::METHOD_CONFIG, null, null);
 
 		return $this->_request('POST', $uri, array( $key => $value ));
+	}
+
+	public function cojs()
+	{
+
+	}
+
+	public function cojsCommit($token)
+	{
+		
+	}
+
+	public function cojsReject($token)
+	{
+
 	}
 
 	/**

@@ -9,13 +9,14 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'Q3putY0lSXn9OKNg15a4x8sHmBUjDWVh';
-$password = 'u1tfwimpXGg8bdWELMzPrHxVFZe9DKNj';
+$username = '1EkcsIZRUJwdWmyT6lzqa4Y0pXvgNKCB';
+$password = 'IZah9p134R7OLtHl26BCmFXWUjVQxsNM';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $Invoice = new ChargeOverAPI_Object_Invoice();
-$Invoice->setCustomerId(141);
+$Invoice->setCustomerId(1);
+$Invoice->setDate('2014-01-02');
 
 $LineItem = new ChargeOverAPI_Object_LineItem();
 $LineItem->setItemId(4);
