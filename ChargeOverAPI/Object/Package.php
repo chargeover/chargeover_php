@@ -4,7 +4,8 @@ class ChargeOverAPI_Object_Package extends ChargeOverAPI_Object
 {
 	const PAYMETHOD_CREDITCARD = 'crd';
 	const PAYMETHOD_ACH = 'ach';
-	const PAYMENTHOD_INVOICE = 'inv';
+	const PAYMETHOD_INVOICE = 'inv';
+	const PAYMETHOD_TOKENIZED = 'tok';
 
 	const PAYCYCLE_WEEKLY = '1wk';
 	const PAYCYCLE_EVERYOTHERWEEK = '2wk';

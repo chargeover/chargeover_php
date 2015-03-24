@@ -15,14 +15,14 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'JxI2LYptQkVDMbaFST8RNegzrqji9Wmh';
-$password = 'k5mSN0rb7KFHl4PBVDpLv2JfoG6qEQiW';
+$username = '1EkcsIZRUJwdWmyT6lzqa4Y0pXvgNKCB';
+$password = 'IZah9p134R7OLtHl26BCmFXWUjVQxsNM';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 // This is the customer/billing package we're updating
-$customer_id = 62;
-$package_id = 599;
+$customer_id = 2;
+$package_id = 1206;
 
 // Create a new credit card object
 $CreditCard = new ChargeOverAPI_Object_CreditCard();
@@ -38,9 +38,15 @@ $resp = $API->create($CreditCard);
 if (!$API->isError($resp))
 {
 	$data = array(
-		'paymethod' => ChargeOverAPI_Object_BillingPackage::PAYMETHOD_CREDITCARD, 
+		'paymethod' => ChargeOverAPI_Object_Package::PAYMETHOD_CREDITCARD, 
 		'creditcard_id' => $resp->response->id, 
 		);
+
+	/*
+	$data = array(
+		'paymethod' => ChargeOverAPI_Object_Package::PAYMETHOD_INVOICE, 
+		);
+	*/
 
 	$resp = $API->action('package', $package_id, 'paymethod', $data);
 
