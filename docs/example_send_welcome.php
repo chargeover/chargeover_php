@@ -29,7 +29,7 @@ $resp = $API->action('package', $package_id, 'welcome');
 // Response from the API 
 print_r($resp);
 
-// Debugging 
+// Debugging
 print("\n\n");
 print($API->lastRequest());
 print("\n\n");
