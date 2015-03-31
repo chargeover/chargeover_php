@@ -14,7 +14,6 @@ $password = '3TI5VjyNGlwYHeBuxfcq7tbKh9PS8iAW';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-
 // Create the user
 $resp = $API->config('chargeoverjs_token', date('YmdHis') . '_' . mt_rand());
 

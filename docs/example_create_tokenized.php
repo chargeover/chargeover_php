@@ -19,8 +19,8 @@ $customer_id = 1;
 $Tokenized = new ChargeOverAPI_Object_Tokenized(array(
 	'customer_id' => $customer_id, // Must be the customer ID of an existing customer in ChargeOver
 
-	'tokenized' => 'abcd1234', 
-	//'type' => ''
+	'token' => 'abcd1234', 
+	'type' => 'customer'
 	));
 
 $resp = $API->create($Tokenized);

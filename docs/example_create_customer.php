@@ -38,7 +38,7 @@ if (!$API->isError($resp))
 }
 else
 {
-	print('error saving customer via API');
+	print('error saving customer via API: ' . $API->lastError());
 
 	print("\n\n\n\n");
 	print($API->lastRequest());
