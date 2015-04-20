@@ -9,15 +9,15 @@ $url = 'http://dev.chargeover.com/signup/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'sLmVGFljcKhtg7rBkAOoNaE9SwWzRYUq';
-$password = '3TI5VjyNGlwYHeBuxfcq7tbKh9PS8iAW';
+$username = '1EkcsIZRUJwdWmyT6lzqa4Y0pXvgNKCB';
+$password = 'IZah9p134R7OLtHl26BCmFXWUjVQxsNM';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $User = new ChargeOverAPI_Object_User(array(
 	'customer_id' => 1, 					// The customer # that the user/contact should be assigned to 
 
-	'username' => 'my_test_username_' . mt_rand(0, 500), 	// (optional) The username the user can use to log in to their customer portal
+	//'username' => 'my_test_username_' . mt_rand(0, 500), 	// (optional) The username the user can use to log in to their customer portal
 	'password' => 'some test password', 					// (optional) The password the user can use to log in 
 
 	'name' => 'Ryan Bantz', 

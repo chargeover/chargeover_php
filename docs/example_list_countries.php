@@ -14,7 +14,7 @@ $password = 'WNJxUswvOFh0RbpXrC6Tut82HE9yGgPQ';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-//Get all customers
+// Get a list of all countries
 $resp = $API->find('country');
 
 /*
