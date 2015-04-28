@@ -8,9 +8,11 @@ require '../ChargeOverAPI.php';
 $url = 'https://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
+$url = 'http://haproxy-dev.chargeover.com/signup/api/v3';
+
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'f3gMZ2b1JzqkxP8LXt9eGVYdnNKAQc0i';
-$password = 'ivw8Wq0cfd9UFTAzaOjLZYNE6e53bIXK';
+$username = 'Q59q7OinLCzSJFd0xbtGA4cy6UNpfIvl';
+$password = 'vam458nCkIerzJqWSdF6BcAYHQiMwux2';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
