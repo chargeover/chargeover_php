@@ -457,6 +457,9 @@ class ChargeOverAPI
 		{
 			foreach ($where as $key => $value)
 			{
+				// Escape commas (they are used to denote multiple query parameters)
+				$value = str_replace(',', '\\,', $value);
+
 				$where[$key] = urlencode($value);
 			}
 		}
