@@ -18,13 +18,13 @@ $url = 'http://haproxy-dev.chargeover.com/signup/api/v3';
 
 // Your ChargeOver API credentials 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'Q59q7OinLCzSJFd0xbtGA4cy6UNpfIvl';
-$password = 'vam458nCkIerzJqWSdF6BcAYHQiMwux2';
+$username = 'aPEDf5ehpOtJjix2lnFc7KrkqVmgHouw';
+$password = 'hrUvPdo21QG0tSLXg4u69ZfIkMa5pinY';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 // Invoice to pay
-$invoice_id = 10006;
+$invoice_id = 10054;
 
 // Pay this invoice, BUT only use the customer's available account balance to pay it 
 //  (e.g. don't charge a credit card, just try to use their available open balance 

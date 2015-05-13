@@ -28,9 +28,13 @@ class ChargeOverAPI_Object
 	public function __construct($arr = array())
 	{
 		//$this->_arr = $arr;
-		foreach ($arr as $key => $value)
+		
+		if (is_array($arr))
 		{
-			$this->$key = $value;
+			foreach ($arr as $key => $value)
+			{
+				$this->$key = $value;
+			}
 		}
 	}
 	

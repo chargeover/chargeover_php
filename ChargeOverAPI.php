@@ -47,6 +47,7 @@ class ChargeOverAPI
 	protected $_last_request;
 	protected $_last_response;
 	protected $_last_error;
+	protected $_last_info;
 
 	// API flags
 	protected $_flags;
@@ -64,6 +65,7 @@ class ChargeOverAPI
 		$this->_last_request = null;
 		$this->_last_response = null;
 		$this->_last_error = null;
+		$this->_last_info = null;
 		
 		$this->_flags = (array) $flags;
 	}
@@ -149,9 +151,10 @@ class ChargeOverAPI
 
 		// Force TLS
 		curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
+		//curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
 
-		//[2/23/15, 8:14:18 AM] Keith Palmer Jr: curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		//[2/23/15, 8:14:30 AM] Keith Palmer Jr: curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 		
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json' ));
 		
@@ -166,14 +169,14 @@ class ChargeOverAPI
 		}
 		
 		$out = curl_exec($ch);
-		$info = curl_getinfo($ch);
+		$this->_last_info = curl_getinfo($ch);
 
 		// Log last response
 		$this->_last_response = $out;
 		
 		if (!$out)
 		{
-			$err = 'Problem hitting URL [' . $endpoint . ']: ' . curl_error($ch) . ', ' . print_r(curl_getinfo($ch), true);
+			$err = 'Problem hitting URL [' . $endpoint . ']: ' . curl_error($ch) . ', ' . print_r($this->_last_info, true);
 			curl_close($ch);
 
 			return $this->_error($err, ChargeOverAPI::ERROR_UNKNOWN);
@@ -234,6 +237,11 @@ class ChargeOverAPI
 	public function lastError()
 	{
 		return $this->_last_error;
+	}
+
+	public function lastInfo()
+	{
+		return $this->_last_info;
 	}
 	
 	public function isError($Object)
