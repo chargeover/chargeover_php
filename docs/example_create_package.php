@@ -23,8 +23,8 @@ $Package->setCustomerId(1);
 // @todo more cycles docs 
 
 $LineItem = new ChargeOverAPI_Object_LineItem();
-$LineItem->setItemId(2);
-$LineItem->setDescrip('Test of a description goes here.');
+$LineItem->setItemId(1);
+//$LineItem->setDescrip('Test of a description goes here.');
 $LineItem->setTrialDays(20);
 $LineItem->setLineQuantity(15);
 
