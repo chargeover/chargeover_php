@@ -11,8 +11,10 @@ $url = 'http://dev.chargeover.com/api/v3';
 $url = 'http://dev.chargeover.com/signup/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'aPEDf5ehpOtJjix2lnFc7KrkqVmgHouw';
-$password = 'hrUvPdo21QG0tSLXg4u69ZfIkMa5pinY';
+$username = 'rjaLs9MYQdieAF5h1BqPkcxIRuNOlGJE';
+$password = '0zYL9hwBpQVfrZXNET5JMjdIqg8HscFn';
+
+$url = 'http://macbookpro.chargeover.com:8888/chargeover/signup/api/v3.php';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
@@ -32,20 +34,23 @@ $LineItem->setTierset(array(
 	'setup' => 0,
 	'base' => 135,
 	'paycycle' => 'mon', 
-	'pricemodel' => 'fla' 
+	'pricemodel' => 'uni',
+	'tiers' => array(
+		0 => array( 'unit_from' => 1, 'unit_to' => 9999, 'amount' => 60 ),
+		),
 	));
 
 $Package->addLineItems($LineItem);
 
 $resp = $API->create($Package);
 
-/*
+
 print("\n\n\n\n");
 	print($API->lastRequest());
 	print("\n\n\n\n");
 	print($API->lastResponse());
 	print("\n\n\n\n");
-*/
+exit;
 
 if (!$API->isError($resp))
 {
