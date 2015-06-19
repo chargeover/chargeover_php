@@ -14,8 +14,6 @@ require '../ChargeOverAPI.php';
 $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
-$url = 'http://macbookpro.chargeover.com:8888/chargeover/signup/api/v3.php';
-
 // Your ChargeOver API credentials 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
 $username = '1EkcsIZRUJwdWmyT6lzqa4Y0pXvgNKCB';
