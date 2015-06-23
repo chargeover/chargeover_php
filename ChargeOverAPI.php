@@ -48,6 +48,9 @@ class ChargeOverAPI
 	protected $_last_response;
 	protected $_last_error;
 	protected $_last_info;
+	protected $_last_debug;
+
+	protected $_debug = false;
 
 	// API flags
 	protected $_flags;
@@ -66,6 +69,9 @@ class ChargeOverAPI
 		$this->_last_response = null;
 		$this->_last_error = null;
 		$this->_last_info = null;
+		$this->_last_debug = null;
+
+		$this->_debug = false;
 		
 		$this->_flags = (array) $flags;
 	}
@@ -88,6 +94,9 @@ class ChargeOverAPI
 	
 	protected function _request($http_method, $uri, $data = null)
 	{
+		$this->_last_debug = null;
+		$this->_last_info = null;
+
 		$public = $this->_username;
 		$private = $this->_password;
 		
@@ -155,6 +164,14 @@ class ChargeOverAPI
 
 		//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+
+		if ($this->_debug)
+		{
+			curl_setopt($ch, CURLOPT_VERBOSE, true);
+
+			$v = fopen('php://temp', 'rw+');
+			curl_setopt($ch, CURLOPT_STDERR, $v);
+		}
 		
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json' ));
 		
@@ -170,6 +187,12 @@ class ChargeOverAPI
 		
 		$out = curl_exec($ch);
 		$this->_last_info = curl_getinfo($ch);
+
+		if ($this->_debug)
+		{
+			rewind($v);
+			$this->_last_debug = stream_get_contents($v);
+		}
 
 		// Log last response
 		$this->_last_response = $out;
@@ -217,6 +240,16 @@ class ChargeOverAPI
 	public function http($opt, $value)
 	{
 
+	}
+
+	public function debug($debug)
+	{
+		$this->_debug = (bool) $debug;
+	}
+
+	public function lastDebug()
+	{
+		return $this->_last_debug;
 	}
 
 	public function flag($flag, $value)
