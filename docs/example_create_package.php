@@ -9,13 +9,17 @@ $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'aPEDf5ehpOtJjix2lnFc7KrkqVmgHouw';
-$password = 'hrUvPdo21QG0tSLXg4u69ZfIkMa5pinY';
+$username = 'rjaLs9MYQdieAF5h1BqPkcxIRuNOlGJE';
+$password = '0zYL9hwBpQVfrZXNET5JMjdIqg8HscFn';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $Package = new ChargeOverAPI_Object_Package();
-$Package->setCustomerId(1);
+$Package->setCustomerId(18);
+
+// Tell it to use whatever ACH account is on file for this customer
+//$Package->setPaymethod('ach');
+//$Package->setPaymethod('crd');  // ... or whichever credit card
 
 // By default, ChargeOver will create MONTHLY recurring packages - but you can change this:
 //$Package->setPaycycle('yrl');  // yearly

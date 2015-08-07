@@ -1,6 +1,6 @@
 {
     "name":             "chargeover/chargeover-php",
     "description":      "A PHP library for the ChargeOver.com REST API recurring billing / subscription invoicing platform.",
-    "keywords":         ["chargeover", "payments", "pay", "subscription", "invoicing", "credit card", "payment"],
+    "keywords":         ["chargeover", "payments", "pay", "subscription", "invoicing", "credit card", "payment", "recurring", "billing" ],
     "homepage":         "https://www.chargeover.com/"
 }
