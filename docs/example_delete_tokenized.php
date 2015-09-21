@@ -20,20 +20,20 @@ $password = 'h1YlowmzS6bROM8eHZBaT9pj5UcFtDIV';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-// This is the unique creditcard ID value 
-$the_creditcard_id = 43;
+// This is the unique tokenized ID value 
+$the_tokenized_id = 1;
 
 // Delete them
-$resp = $API->delete(ChargeOverAPI_Object::TYPE_CREDITCARD, $the_creditcard_id);
+$resp = $API->delete(ChargeOverAPI_Object::TYPE_TOKENIZED, $the_tokenized_id);
 
 // Check for errors 
 if (!$API->isError($resp))
 {
-	print('Credit card was deleted!');
+	print('Tokenized info was deleted!');
 }
 else
 {
-	print('The credit card COULD NOT BE DELETED!');
+	print('The tokenized info COULD NOT BE DELETED!');
 
 	print("\n\n\n\n");
 	print($API->lastRequest());
@@ -41,3 +41,4 @@ else
 	print($API->lastResponse());
 	print("\n\n\n\n");
 }
+
