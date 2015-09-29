@@ -23,6 +23,8 @@ class ChargeOverAPI_Object
 	const TYPE_COUNTRY = 'country';
 	const TYPE_TOKENIZED = 'tokenized';
 
+	const TYPE_RESTHOOK = '_resthook';
+
 	//protected $_arr;
 	
 	public function __construct($arr = array())

@@ -15,6 +15,7 @@ $password = 'B6LnuVGE74Co1TacXxHjdwk9hKtPpIW0';
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 
+
 $Usage = new ChargeOverAPI_Object_Usage();
 
 $Usage->setLineItemId(854);
@@ -26,7 +27,6 @@ $Usage->setTo('2015-09-15 23:59:59');
 
 
 
-$resp = $API->create($Usage);
 
 
 //print_r($resp);

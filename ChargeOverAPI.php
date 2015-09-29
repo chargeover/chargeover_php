@@ -391,6 +391,7 @@ class ChargeOverAPI
 			ChargeOverAPI_Object::TYPE_NOTE => 'ChargeOverAPI_Object_Note', 
 			ChargeOverAPI_Object::TYPE_COUNTRY => 'ChargeOverAPI_Object_Country', 
 			ChargeOverAPI_Object::TYPE_TOKENIZED => 'ChargeOverAPI_Object_Tokenized', 
+			ChargeOverAPI_Object::TYPE_RESTHOOK => 'ChargeOverAPI_Object_Resthook', 
 			);
 	}
 	
