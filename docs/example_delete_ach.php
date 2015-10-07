@@ -15,13 +15,13 @@ $url = 'http://dev.chargeover.com/api/v3';
 
 // You should substitute your API credentials in here 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'JxI2LYptQkVDMbaFST8RNegzrqji9Wmh';
-$password = 'k5mSN0rb7KFHl4PBVDpLv2JfoG6qEQiW';
+$username = 'p1Ii7JWQKLzZ64G9lt3PAUa8exNsf5RM';
+$password = 'h1YlowmzS6bROM8eHZBaT9pj5UcFtDIV';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 // This is the unique customer ID value 
-$the_ach_id = 8;
+$the_ach_id = 1;
 
 // Delete them
 $resp = $API->delete(ChargeOverAPI_Object::TYPE_ACH, $the_ach_id);

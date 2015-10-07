@@ -24,7 +24,7 @@ if ($json['security_token'] == $secret)
 		
 		if ($json['event'] == 'status')
 		{
-			// A new PACKAGE just had it's STATUS change in ChargeOver
+			// A PACKAGE just had it's STATUS change in ChargeOver
 
 			$customer_id = $json['data']['customer']['customer_id'];
 			$company = $json['data']['customer']['company'];
