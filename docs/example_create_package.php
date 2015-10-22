@@ -23,7 +23,7 @@ $Package->setCustomerId(18);
 
 // By default, ChargeOver will create MONTHLY recurring packages - but you can change this:
 //$Package->setPaycycle('yrl');  // yearly
-//$Package->setPayCycle('qtr');  // quarterly
+//$Package->setPaycycle('qtr');  // quarterly
 // @todo more cycles docs 
 
 $LineItem = new ChargeOverAPI_Object_LineItem();
