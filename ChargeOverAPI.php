@@ -279,18 +279,7 @@ class ChargeOverAPI
 	
 	public function isError($Object)
 	{
-		//print_r($Object);
-
-		if (!is_object($Object))
-		{
-			return true;
-		}
-		else if ($Object->status != ChargeOverAPI::STATUS_OK)
-		{
-			return true;
-		}
-		
-		return false;
+		return (!is_object($Object) or $Object->status != ChargeOverAPI::STATUS_OK);
 	}
 	
 	/**
@@ -463,12 +452,6 @@ class ChargeOverAPI
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_CREATE, null, $Object);
 		
-		/*
-		print('[');
-		print_r($Object);
-		print(']');
-		*/
-
 		return $this->_request('POST', $uri, $Object->toArray());
 	}
 	
@@ -485,9 +468,8 @@ class ChargeOverAPI
 
 		$uri .= '?_dummy=1';
 
-		// WHERE 
-		if (is_array($where) and 
-			count($where))
+		// WHERE
+		if (is_array($where) and count($where))
 		{
 			foreach ($where as $key => $value)
 			{
@@ -496,21 +478,18 @@ class ChargeOverAPI
 
 				$where[$key] = urlencode($value);
 			}
+            $uri .= '&where=' . implode(',', $where);
 		}
 
-		$uri .= '&where=' . implode(',', $where);
-
-		// ORDER 
-		if (is_array($sort) and 
-			count($sort))
+		// SORT
+		if (is_array($sort) and count($sort))
 		{
 			foreach ($sort as $key => $value)
 			{
 				$sort[$key] = urlencode($value);
 			}
+            $uri .= '&order=' . implode(',', $sort);
 		}
-
-		$uri .= '&order=' . implode(',', $sort);
 
 		if ($offset or $limit)
 		{
@@ -519,11 +498,12 @@ class ChargeOverAPI
 
 		$resp = $this->_request('GET', $uri);
 
-		if (!$this->isError($resp))
+		if ($this->isError($resp))
+        {
+            throw new ChargeOverException($resp->message);
+        }
+        else
 		{
-			//print_r($resp);
-			//print("\n\n\n\n");
-
 			$class = $this->typeToClass($type);
 
 			// Let's try to transform the array we got back into a list of objects
@@ -531,9 +511,8 @@ class ChargeOverAPI
 			{
 				$resp->response[$key] = $this->_createObject($class, $obj);
 			}
+            return $resp->response;
 		}
-
-		return $resp;
 	}
 
 	public function delete($type, $id)
@@ -554,14 +533,23 @@ class ChargeOverAPI
 
 		$resp = $this->_request('GET', $uri);
 
-		if (!$this->isError($resp))
+		if ($this->isError($resp))
+        {
+            if ($resp->message = 'This item does not exist.')
+            {
+                return null;
+            }
+            else
+            {
+                throw new ChargeOverException($resp->message);
+            }
+        }
+        else
 		{
 			$class = $this->typeToClass($type);
 
-			$resp->response = $this->_createObject($class, $resp->response);
+			return $this->_createObject($class, $resp->response);
 		}
-
-		return $resp;
 	}
 
 	protected function _createObject($class, $arr_or_obj)
@@ -616,26 +604,6 @@ class ChargeOverAPI
 						$arr_or_obj[$key] = $this->_createObject($sclass, $value);
 					}
 				}
-
-				/*
-				foreach ($value as $skey => $obj)
-				{
-					if ($sclass)
-					{
-						if (is_object($obj))
-						{
-							$obj = get_object_vars($obj);
-						}
-
-						$arr[$key][$skey] = new $sclass($obj);
-					}
-				}
-				*/
-			}
-			else
-			{
-
-			}
 		}
 
 		return new $class($arr_or_obj);
