@@ -19,7 +19,7 @@ class ChargeOverAPI
 
 	const AUTHMODE_SIGNATURE_V1 = 'signature-v1';
 	const AUTHMODE_HTTP_BASIC = 'http-basic';
-	
+
 	const METHOD_CREATE = 'create';
 	const METHOD_MODIFY = 'modify';
 	const METHOD_DELETE = 'delete';
@@ -30,7 +30,7 @@ class ChargeOverAPI
 	const METHOD_BULK = 'bulk';
 	const METHOD_CONFIG = 'config';
 	const METHOD_CHARGEOVERJS = 'chargeoverjs';
-	
+
 	const STATUS_OK = 'OK';
 	const STATUS_ERROR = 'Error';
 
@@ -38,12 +38,12 @@ class ChargeOverAPI
 	const FLAG_EMAILS = '_flag_emails';
 	const FLAG_WEBHOOKS = '_flag_webhooks';
 	const FLAG_EVENTS = '_flag_events';
-	
+
 	protected $_url;
 	protected $_authmode;
 	protected $_username;
 	protected $_password;
-	
+
 	protected $_last_request;
 	protected $_last_response;
 	protected $_last_error;
@@ -57,14 +57,14 @@ class ChargeOverAPI
 
 	// HTTP curl options
 	protected $_http;
-	
+
 	public function __construct($url, $authmode, $username, $password, $flags = array())
 	{
 		$this->_url = rtrim($url, '/');
 		$this->_authmode = $authmode;
 		$this->_username = $username;
 		$this->_password = $password;
-		
+
 		$this->_last_request = null;
 		$this->_last_response = null;
 		$this->_last_error = null;
@@ -72,26 +72,26 @@ class ChargeOverAPI
 		$this->_last_debug = null;
 
 		$this->_debug = false;
-		
+
 		$this->_flags = (array) $flags;
 	}
-	
+
 	protected function _signature($public, $private, $url, $data)
 	{
 		$tmp = array_merge(range('a', 'z'), range(0, 9));
 		shuffle($tmp);
 		$nonce = implode('', array_slice($tmp, 0, 8));
-		
+
 		$time = time();
-		
+
 		$str = $public . '||' . strtolower($url) . '||' . $nonce . '||' . $time . '||' . $data;
 		$signature = hash_hmac('sha256', $str, $private);
 
 		//print('lib {   ' . $str . '   }' . "\n\n");
-		
+
 		return 'Authorization: ChargeOver co_public_key="' . $public . '" co_nonce="' . $nonce . '" co_timestamp="' . $time . '" co_signature_method="HMAC-SHA256" co_version="1.0" co_signature="' . $signature . '" ';
 	}
-	
+
 	protected function _request($http_method, $uri, $data = null)
 	{
 		$this->_last_debug = null;
@@ -99,7 +99,7 @@ class ChargeOverAPI
 
 		$public = $this->_username;
 		$private = $this->_password;
-		
+
 		$endpoint = $this->_url . '/' . ltrim($uri, '/');
 
 		if (count($this->_flags))
@@ -113,7 +113,7 @@ class ChargeOverAPI
 				$endpoint .= '&' . http_build_query($this->_flags);
 			}
 		}
-		
+
 		/*
 		if (false === strpos($endpoint, '?'))
 		{
@@ -124,10 +124,10 @@ class ChargeOverAPI
 			$endpoint .= '&debug=1';
 		}
 		*/
-		
+
 		$headers = array();
 		$headers[] = 'Content-Type: application/json';
-		
+
 		// create a new cURL resource
 		$ch = curl_init();
 
@@ -137,12 +137,12 @@ class ChargeOverAPI
 			$post_data = json_encode($data);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
 		}
-		
+
 		if ($this->_authmode == ChargeOverAPI::AUTHMODE_SIGNATURE_V1)
 		{
 			// Signed requests
 			$signature = $this->_signature($public, $private, $endpoint, $post_data);
-			
+
 			$headers[] = $signature;
 		}
 		else if ($this->_authmode == ChargeOverAPI::AUTHMODE_HTTP_BASIC)
@@ -151,10 +151,10 @@ class ChargeOverAPI
 			curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 			curl_setopt($ch, CURLOPT_USERPWD, $public . ':' . $private);
 		}
-		
+
 		// set URL and other appropriate options
 		curl_setopt($ch, CURLOPT_URL, $endpoint);
-		
+
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
 
@@ -172,19 +172,19 @@ class ChargeOverAPI
 			$v = fopen('php://temp', 'rw+');
 			curl_setopt($ch, CURLOPT_STDERR, $v);
 		}
-		
+
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Content-Type: application/json' ));
-		
+
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_method);
-		
+
 		// Build last request string
 		$this->_last_request = $http_method . ' ' . $endpoint . "\r\n\r\n";
 		if ($post_data)
 		{
 			$this->_last_request .= $post_data;
 		}
-		
+
 		$out = curl_exec($ch);
 		$this->_last_info = curl_getinfo($ch);
 
@@ -196,7 +196,7 @@ class ChargeOverAPI
 
 		// Log last response
 		$this->_last_response = $out;
-		
+
 		if (!$out)
 		{
 			$err = 'Problem hitting URL [' . $endpoint . ']: ' . curl_error($ch) . ', ' . print_r($this->_last_info, true);
@@ -206,7 +206,7 @@ class ChargeOverAPI
 		}
 
 		curl_close($ch);
-		
+
 		$data = json_decode($out);
 
 		if (json_last_error() == JSON_ERROR_NONE)
@@ -223,17 +223,17 @@ class ChargeOverAPI
 		$err = 'Server returned an invalid JSON response: ' . $out . ', JSON parser returned error: ' . json_last_error();
 		return $this->_error($err, ChargeOverAPI::ERROR_RESPONSE);
 	}
-	
+
 	protected function _error($err, $code = 400)
 	{
-		$this->_last_error = $err; 
+		$this->_last_error = $err;
 
-		// The response we got back wasn't valid JSON...? 
-		return json_decode(json_encode(array( 
+		// The response we got back wasn't valid JSON...?
+		return json_decode(json_encode(array(
 			'code' => $code, 			// let's force this to a 400 error instead, it's non-recoverable    $info['http_code'],
-			'status' => ChargeOverAPI::STATUS_ERROR, 
-			'message' => $err, 
-			'response' => null, 
+			'status' => ChargeOverAPI::STATUS_ERROR,
+			'message' => $err,
+			'response' => null,
 			)));
 	}
 
@@ -261,12 +261,12 @@ class ChargeOverAPI
 	{
 		return $this->_last_request;
 	}
-	
+
 	public function lastResponse()
 	{
 		return $this->_last_response;
 	}
-	
+
 	public function lastError()
 	{
 		return $this->_last_error;
@@ -276,19 +276,19 @@ class ChargeOverAPI
 	{
 		return $this->_last_info;
 	}
-	
+
 	public function isError($Object)
 	{
 		return (!is_object($Object) or $Object->status != ChargeOverAPI::STATUS_OK);
 	}
-	
+
 	/**
 	 * Map a method/id/object type to an API URL
-	 * 
+	 *
 	 * @param string $method
 	 * @param integer $id
 	 * @param varies $Object_or_obj_type			Either an object, or an object type constant
-	 * @return string 								The URL for the API 
+	 * @return string 								The URL for the API
 	 */
 	protected function _map($method, $id, $Object_or_obj_type)
 	{
@@ -313,12 +313,12 @@ class ChargeOverAPI
 		{
 			$obj_type = $Object_or_obj_type;
 		}
-		
+
 		if ($method == ChargeOverAPI::METHOD_CREATE)
 		{
 			$id = null;
 		}
-		
+
 		if ($id)
 		{
 			return $obj_type . '/' . $id;
@@ -365,41 +365,41 @@ class ChargeOverAPI
 	protected function _typeClassMap()
 	{
 		return array(
-			ChargeOverAPI_Object::TYPE_CUSTOMER => 'ChargeOverAPI_Object_Customer', 
-			ChargeOverAPI_Object::TYPE_USER => 'ChargeOverAPI_Object_User', 
-			ChargeOverAPI_Object::TYPE_BILLINGPACKAGE => 'ChargeOverAPI_Object_BillingPackage', 
-			ChargeOverAPI_Object::TYPE_PACKAGE => 'ChargeOverAPI_Object_Package', 
-			ChargeOverAPI_Object::TYPE_PROJECT => 'ChargeOverAPI_Object_Project', 
-			ChargeOverAPI_Object::TYPE_CREDITCARD => 'ChargeOverAPI_Object_CreditCard', 
-			ChargeOverAPI_Object::TYPE_INVOICE => 'ChargeOverAPI_Object_Invoice', 
-			ChargeOverAPI_Object::TYPE_TRANSACTION => 'ChargeOverAPI_Object_Transaction', 
-			ChargeOverAPI_Object::TYPE_ACH => 'ChargeOverAPI_Object_Ach', 
-			ChargeOverAPI_Object::TYPE_USAGE => 'ChargeOverAPI_Object_Usage', 
+			ChargeOverAPI_Object::TYPE_CUSTOMER => 'ChargeOverAPI_Object_Customer',
+			ChargeOverAPI_Object::TYPE_USER => 'ChargeOverAPI_Object_User',
+			ChargeOverAPI_Object::TYPE_BILLINGPACKAGE => 'ChargeOverAPI_Object_BillingPackage',
+			ChargeOverAPI_Object::TYPE_PACKAGE => 'ChargeOverAPI_Object_Package',
+			ChargeOverAPI_Object::TYPE_PROJECT => 'ChargeOverAPI_Object_Project',
+			ChargeOverAPI_Object::TYPE_CREDITCARD => 'ChargeOverAPI_Object_CreditCard',
+			ChargeOverAPI_Object::TYPE_INVOICE => 'ChargeOverAPI_Object_Invoice',
+			ChargeOverAPI_Object::TYPE_TRANSACTION => 'ChargeOverAPI_Object_Transaction',
+			ChargeOverAPI_Object::TYPE_ACH => 'ChargeOverAPI_Object_Ach',
+			ChargeOverAPI_Object::TYPE_USAGE => 'ChargeOverAPI_Object_Usage',
 			ChargeOverAPI_Object::TYPE_ITEM => 'ChargeOverAPI_Object_Item',
-			ChargeOverAPI_Object::TYPE_ITEMCATEGORY => 'ChargeOverAPI_Object_ItemCategory', 
-			ChargeOverAPI_Object::TYPE_NOTE => 'ChargeOverAPI_Object_Note', 
-			ChargeOverAPI_Object::TYPE_COUNTRY => 'ChargeOverAPI_Object_Country', 
-			ChargeOverAPI_Object::TYPE_TOKENIZED => 'ChargeOverAPI_Object_Tokenized', 
-			ChargeOverAPI_Object::TYPE_RESTHOOK => 'ChargeOverAPI_Object_Resthook', 
+			ChargeOverAPI_Object::TYPE_ITEMCATEGORY => 'ChargeOverAPI_Object_ItemCategory',
+			ChargeOverAPI_Object::TYPE_NOTE => 'ChargeOverAPI_Object_Note',
+			ChargeOverAPI_Object::TYPE_COUNTRY => 'ChargeOverAPI_Object_Country',
+			ChargeOverAPI_Object::TYPE_TOKENIZED => 'ChargeOverAPI_Object_Tokenized',
+			ChargeOverAPI_Object::TYPE_RESTHOOK => 'ChargeOverAPI_Object_Resthook',
 			);
 	}
-	
+
 	public function rawRequest($method, $uri, $data)
 	{
-		
+
 	}
 
 	public function bulk($Bulk)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_BULK, null, null);
-		
+
 		return $this->_request('POST', $uri, $Bulk->toArray());
 	}
-	
+
 	public function aggregate($Aggregate)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_AGGREGATE, null, null);
-		
+
 		return $this->_request('POST', $uri, $Aggregate->toArray());
 	}
 
@@ -417,7 +417,7 @@ class ChargeOverAPI
 
 	public function cojsCommit($token)
 	{
-		
+
 	}
 
 	public function cojsReject($token)
@@ -427,11 +427,11 @@ class ChargeOverAPI
 
 	/**
 	 * Perform an action (e.g. upgrade/downgrade, cancel, void, set payment method, etc.)
-	 * 
+	 *
 	 * @param string $type
 	 * @param integer $id
 	 * @param string $action
-	 * @param array $data 
+	 * @param array $data
 	 * @return array
 	 */
 	public function action($type, $id, $action, $data = array())
@@ -451,17 +451,17 @@ class ChargeOverAPI
 	public function create($Object)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_CREATE, null, $Object);
-		
+
 		return $this->_request('POST', $uri, $Object->toArray());
 	}
-	
+
 	public function modify($id, $Object)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_MODIFY, $id, $Object);
 
 		return $this->_request('PUT', $uri, $Object->toArray());
 	}
-	
+
 	public function find($type, $where = array(), $sort = array(), $offset = 0, $limit = null)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_FIND, null, $type);
@@ -607,5 +607,6 @@ class ChargeOverAPI
 		}
 
 		return new $class($arr_or_obj);
+		}
 	}
 }
