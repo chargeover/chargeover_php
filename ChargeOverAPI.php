@@ -10,6 +10,8 @@ ChargeOverAPI_Loader::load('/ChargeOverAPI/Aggregate.php');
 
 ChargeOverAPI_Loader::load('/ChargeOverAPI/Bulk.php');
 
+ChargeOverAPI_Loader::load('/ChargeOverAPI/Exception.php');
+
 ChargeOverAPI_Loader::import('/ChargeOverAPI/Object/');
 
 class ChargeOverAPI
@@ -279,7 +281,16 @@ class ChargeOverAPI
 
 	public function isError($Object)
 	{
-		return (!is_object($Object) or $Object->status != ChargeOverAPI::STATUS_OK);
+		if (!is_object($Object))
+		{
+			return true;
+		}
+		else if ($Object->status != ChargeOverAPI::STATUS_OK)
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -478,7 +489,7 @@ class ChargeOverAPI
 
 				$where[$key] = urlencode($value);
 			}
-            $uri .= '&where=' . implode(',', $where);
+			$uri .= '&where=' . implode(',', $where);
 		}
 
 		// SORT
@@ -488,7 +499,7 @@ class ChargeOverAPI
 			{
 				$sort[$key] = urlencode($value);
 			}
-            $uri .= '&order=' . implode(',', $sort);
+			$uri .= '&order=' . implode(',', $sort);
 		}
 
 		if ($offset or $limit)
@@ -498,11 +509,7 @@ class ChargeOverAPI
 
 		$resp = $this->_request('GET', $uri);
 
-		if ($this->isError($resp))
-        {
-            throw new ChargeOverException($resp->message);
-        }
-        else
+		if (!$this->isError($resp))
 		{
 			$class = $this->typeToClass($type);
 
@@ -511,7 +518,8 @@ class ChargeOverAPI
 			{
 				$resp->response[$key] = $this->_createObject($class, $obj);
 			}
-            return $resp->response;
+
+			return $resp->response;
 		}
 	}
 
@@ -524,7 +532,7 @@ class ChargeOverAPI
 
 	public function findById($type, $id)
 	{
-		if (!$id)
+		if (! ((int) $id))
 		{
 			return $this->_error('You must provide a valid id value to findById($type, $id)');
 		}
@@ -533,18 +541,7 @@ class ChargeOverAPI
 
 		$resp = $this->_request('GET', $uri);
 
-		if ($this->isError($resp))
-        {
-            if ($resp->message = 'This item does not exist.')
-            {
-                return null;
-            }
-            else
-            {
-                throw new ChargeOverException($resp->message);
-            }
-        }
-        else
+		if (!$this->isError($resp))
 		{
 			$class = $this->typeToClass($type);
 
@@ -604,9 +601,9 @@ class ChargeOverAPI
 						$arr_or_obj[$key] = $this->_createObject($sclass, $value);
 					}
 				}
-		}
+			}
 
-		return new $class($arr_or_obj);
+			return new $class($arr_or_obj);
 		}
 	}
 }

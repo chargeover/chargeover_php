@@ -16,13 +16,13 @@ $url = 'http://dev.chargeover.com/api/v3';
 
 // Your ChargeOver API credentials 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'yPeQBOa0jAZS91R6u7VvtxYk2wTJFLn4';
-$password = 'uk1Q4SgVwcfUzp3xvIlOLR5YiNjbmMsB';
+$username = 'fnELaQ2yXJeINDZ6HjVtAwF0mSqdxCzo';
+$password = 'ePTGCYz104wILNdcWZMQsV3JEjapqBlm';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 // The invoice that we want to void
-$transaction_id = 65;
+$transaction_id = 129;
 
 // This $data is all optional, but can be used to override the defaults
 $data = array(
@@ -52,7 +52,3 @@ else
 	print("\n\n\n\n");
 }
 
-
-print($API->lastRequest());
-	print("\n\n\n\n");
-	print($API->lastResponse());
