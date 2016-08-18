@@ -32,6 +32,7 @@ class ChargeOverAPI
 	const METHOD_BULK = 'bulk';
 	const METHOD_CONFIG = 'config';
 	const METHOD_CHARGEOVERJS = 'chargeoverjs';
+	const METHOD_REPORT = 'report';
 
 	const STATUS_OK = 'OK';
 	const STATUS_ERROR = 'Error';
@@ -40,6 +41,11 @@ class ChargeOverAPI
 	const FLAG_EMAILS = '_flag_emails';
 	const FLAG_WEBHOOKS = '_flag_webhooks';
 	const FLAG_EVENTS = '_flag_events';
+
+	const REPORT_HTML = 'HTML';
+	const REPORT_DATA = 'Data';
+	const REPORT_CSV = 'CSV';
+	const REPORT_EXCEL = 'Excel';
 
 	protected $_url;
 	protected $_authmode;
@@ -289,7 +295,7 @@ class ChargeOverAPI
 		{
 			return true;
 		}
-
+		
 		return false;
 	}
 
@@ -314,6 +320,10 @@ class ChargeOverAPI
 		else if ($method == ChargeOverAPI::METHOD_CONFIG)
 		{
 			return '_config';
+		}
+		else if ($method == ChargeOverAPI::METHOD_REPORT)
+		{
+			return '_report/' . (int) $id . '?action=get' . $Object_or_obj_type;
 		}
 
 		if (is_object($Object_or_obj_type))
@@ -437,6 +447,20 @@ class ChargeOverAPI
 	}
 
 	/**
+	 * Get data from a ChargeOver report 
+	 * 
+	 * @param  integer $id        The report ID #
+	 * @param  string $format     The format of data to get back (the HTML version of the report, or the raw data)
+	 * @return object
+	 */
+	public function report($id, $filters = array(), $format = ChargeOverAPI::REPORT_DATA)
+	{
+		$uri = $this->_map(ChargeOverAPI::METHOD_REPORT, $id, $format);
+
+		return $this->_request('POST', $uri, $filters);
+	}
+
+	/**
 	 * Perform an action (e.g. upgrade/downgrade, cancel, void, set payment method, etc.)
 	 *
 	 * @param string $type
@@ -518,9 +542,9 @@ class ChargeOverAPI
 			{
 				$resp->response[$key] = $this->_createObject($class, $obj);
 			}
-
-			return $resp->response;
 		}
+
+		return $resp;
 	}
 
 	public function delete($type, $id)
@@ -547,6 +571,8 @@ class ChargeOverAPI
 
 			return $this->_createObject($class, $resp->response);
 		}
+
+		return $resp;
 	}
 
 	protected function _createObject($class, $arr_or_obj)
