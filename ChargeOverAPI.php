@@ -222,7 +222,7 @@ class ChargeOverAPI
 			// We at least got back a valid JSON object
 			if ($data->status != ChargeOverAPI::STATUS_OK)
 			{
-				return $this->_error($data->message, $data->code);
+				return $this->_error($data->message, $data->code, $data->details);
 			}
 
 			return $data;
@@ -232,7 +232,7 @@ class ChargeOverAPI
 		return $this->_error($err, ChargeOverAPI::ERROR_RESPONSE);
 	}
 
-	protected function _error($err, $code = 400)
+	protected function _error($err, $code = 400, $details = null)
 	{
 		$this->_last_error = $err;
 
@@ -241,6 +241,7 @@ class ChargeOverAPI
 			'code' => $code, 			// let's force this to a 400 error instead, it's non-recoverable    $info['http_code'],
 			'status' => ChargeOverAPI::STATUS_ERROR,
 			'message' => $err,
+			'details' => $details, 
 			'response' => null,
 			)));
 	}

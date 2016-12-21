@@ -16,16 +16,16 @@ $url = 'http://dev.chargeover.com/api/v3';
 
 // Your ChargeOver API credentials 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = '7sutWFEO2zKVYIGmZMJ3Nij5hfLxDRb8';
-$password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
+$username = '1YExkQoscPr0eHzVbKvMASyLpmC427BW';
+$password = 'fhKyga18s3D42lIbB6vRc0TdFOzrYUkL';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $Invoice = new ChargeOverAPI_Object_Invoice();
-$Invoice->setCustomerId(1562);
+$Invoice->setCustomerId(23);
 
 $LineItem = new ChargeOverAPI_Object_LineItem();
-$LineItem->setItemId(303);
+$LineItem->setItemId(1);
 $LineItem->setLineRate(29.95);
 $LineItem->setLineQuantity(3);
 $LineItem->setDescrip('Test of a description goes here.');
@@ -45,7 +45,10 @@ if (!$API->isError($resp))
 
 	// Create the credit card object
 	$CreditCard = new ChargeOverAPI_Object_CreditCard(array(
-		'number' => '4111 1111 1111 1111', 
+		
+		//'number' => '4111 1111 1111 1111', 
+		'number' => '4116196783374209',    // This one causes decline messages
+
 		'expdate_year' => '2015', 
 		'expdate_month' => '12', 
 		'name' => 'Keith Palmer', 
