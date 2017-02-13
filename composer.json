@@ -5,6 +5,5 @@
     "homepage":         "https://www.chargeover.com/",
     "autoload": {
         "classmap": ["ChargeOverAPI.php", "ChargeOverAPI/"]
-    },
-    "minimum-stability": "stable"
+    }
 }
