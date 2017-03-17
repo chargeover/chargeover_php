@@ -241,7 +241,7 @@ class ChargeOverAPI
 			'code' => $code, 			// let's force this to a 400 error instead, it's non-recoverable    $info['http_code'],
 			'status' => ChargeOverAPI::STATUS_ERROR,
 			'message' => $err,
-			'details' => $details, 
+			'details' => $details,
 			'response' => null,
 			)));
 	}
@@ -296,7 +296,7 @@ class ChargeOverAPI
 		{
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -448,8 +448,8 @@ class ChargeOverAPI
 	}
 
 	/**
-	 * Get data from a ChargeOver report 
-	 * 
+	 * Get data from a ChargeOver report
+	 *
 	 * @param  integer $id        The report ID #
 	 * @param  string $format     The format of data to get back (the HTML version of the report, or the raw data)
 	 * @return object
@@ -570,7 +570,7 @@ class ChargeOverAPI
 		{
 			$class = $this->typeToClass($type);
 
-			return $this->_createObject($class, $resp->response);
+			$resp->response = $this->_createObject($class, $resp->response);
 		}
 
 		return $resp;
