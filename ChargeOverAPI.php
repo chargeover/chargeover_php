@@ -324,7 +324,7 @@ class ChargeOverAPI
 		}
 		else if ($method == ChargeOverAPI::METHOD_REPORT)
 		{
-			return '_report/' . (int) $id . '?action=get' . $Object_or_obj_type;
+			return '_report/' . (int) $id . '?action=reportData';
 		}
 
 		if (is_object($Object_or_obj_type))
