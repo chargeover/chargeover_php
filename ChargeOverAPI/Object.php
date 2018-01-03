@@ -15,6 +15,7 @@ class ChargeOverAPI_Object
 	const TYPE_ITEM = 'item';
 	const TYPE_ITEMCATEGORY = 'item_category';
 	const TYPE_INVOICE = 'invoice';
+	const TYPE_QUOTE = 'quote';
 	const TYPE_CREDITCARD = 'creditcard';
 	const TYPE_TRANSACTION = 'transaction';
 	const TYPE_ACH = 'ach';
@@ -26,11 +27,11 @@ class ChargeOverAPI_Object
 	const TYPE_RESTHOOK = '_resthook';
 
 	//protected $_arr;
-	
+
 	public function __construct($arr = array())
 	{
 		//$this->_arr = $arr;
-		
+
 		if (is_array($arr))
 		{
 			foreach ($arr as $key => $value)
@@ -39,16 +40,16 @@ class ChargeOverAPI_Object
 			}
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static function transformMethodToField($method)
 	{
 		$strip = array(
-			'set', 
-			'get', 
-			'add', 
+			'set',
+			'get',
+			'add',
 			);
 
 		foreach ($strip as $prefix)
@@ -92,7 +93,7 @@ class ChargeOverAPI_Object
 			{
 				$parts[] = ucfirst(substr($field, $last, $i));
 				$i++;
-				$last = $i;				
+				$last = $i;
 			}
 		}
 
@@ -116,7 +117,7 @@ class ChargeOverAPI_Object
 
 			//print('transformed [' . $name . ' to ' . $field . ']' . "\n");
 
-			if (array_key_exists(0, $args) and 			// Trying to get a specific element, e.g.   getLineItems(2) 
+			if (array_key_exists(0, $args) and 			// Trying to get a specific element, e.g.   getLineItems(2)
 				is_numeric($args[0]))
 			{
 				//if (!empty($this->_arr[$field][$args[0]]))
@@ -167,7 +168,7 @@ class ChargeOverAPI_Object
 				$val[$key] = $this->_massage($value);
 			}
 		}
-	
+
 		return $val;
 	}
 
@@ -175,7 +176,7 @@ class ChargeOverAPI_Object
 	{
 		$vars = get_object_vars($this);
 		$arr = $this->_massage($vars);
-		
+
 		return json_encode($arr, JSON_PRETTY_PRINT);
 	}
 

@@ -394,6 +394,7 @@ class ChargeOverAPI
 			ChargeOverAPI_Object::TYPE_PROJECT => 'ChargeOverAPI_Object_Project',
 			ChargeOverAPI_Object::TYPE_CREDITCARD => 'ChargeOverAPI_Object_CreditCard',
 			ChargeOverAPI_Object::TYPE_INVOICE => 'ChargeOverAPI_Object_Invoice',
+			ChargeOverAPI_Object::TYPE_QUOTE => 'ChargeOverAPI_Object_Quote',
 			ChargeOverAPI_Object::TYPE_TRANSACTION => 'ChargeOverAPI_Object_Transaction',
 			ChargeOverAPI_Object::TYPE_ACH => 'ChargeOverAPI_Object_Ach',
 			ChargeOverAPI_Object::TYPE_USAGE => 'ChargeOverAPI_Object_Usage',
