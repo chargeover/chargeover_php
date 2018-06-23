@@ -8,6 +8,8 @@
 
 header('Content-Type: text/plain');
 
+use ChargeOver\APIObject\CreditCard;
+use ChargeOver\APIObject\Package;
 use ChargeOver\ChargeOverAPI;
 
 require_once '../vendor/autoload.php';
@@ -27,7 +29,7 @@ $customer_id = 2;
 $package_id = 1206;
 
 // Create a new credit card object
-$CreditCard = new \ChargeOver\APIObject_CreditCard();
+$CreditCard = new CreditCard();
 $CreditCard->setNumber('4111 1111 1111 1111');
 $CreditCard->setExpdateYear(date('Y') + 1);
 $CreditCard->setExpdateMonth(12);
@@ -40,7 +42,7 @@ $resp = $API->create($CreditCard);
 if (!$API->isError($resp))
 {
 	$data = array(
-		'paymethod' => \ChargeOver\APIObject_Package::PAYMETHOD_CREDITCARD,
+		'paymethod' => Package::PAYMETHOD_CREDITCARD,
 		'creditcard_id' => $resp->response->id,
 		);
 
