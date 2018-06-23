@@ -2,25 +2,27 @@
 
 /**
  * Example of running into a duplicate external key error
- * 
- * External keys are used in ChargeOver to provide an easy way to integrate 
- * external systems with ChargeOver. You can stuff your own keys into any 
- * ChargeOver object, and then later query by and reference that object by 
+ *
+ * External keys are used in ChargeOver to provide an easy way to integrate
+ * external systems with ChargeOver. You can stuff your own keys into any
+ * ChargeOver object, and then later query by and reference that object by
  * your own external key value.
- * 
- * External keys are a UNIQUE CONSTRAINT in ChargeOver - e.g. you can't have 
- * two customers with the same external key. Trying to do that will result 
- * in an error message. 
- * 
+ *
+ * External keys are a UNIQUE CONSTRAINT in ChargeOver - e.g. you can't have
+ * two customers with the same external key. Trying to do that will result
+ * in an error message.
+ *
  * See the docs for more details:
  * 	http://chargeover.com/docs/rest-api.html#external-keys
- * 
+ *
  * @author Keith Palmer <support@ChargeOver.com>
  */
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -35,9 +37,9 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 // Here's the external key we're going to try to use more than once
 $external_key = 'duplicate key ' . mt_rand(0, 100);
 
-$Customer = new ChargeOverAPI_Object_Customer(array(
+$Customer = new \ChargeOver\APIObject_Customer(array(
 	'company' => 'Test API Company, LLC',
-	
+
 	'bill_addr1' => '123 ChargeOver Street',
 	'bill_addr2' => 'Suite 10',
 	'bill_city' => 'Minneapolis',

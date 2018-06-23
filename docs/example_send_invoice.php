@@ -3,18 +3,20 @@
 /**
  * Example of creating an invoice, and then paying it using an ACH/eCheck payment
  *
- * 
+ *
  */
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
-// Your ChargeOver API credentials 
+// Your ChargeOver API credentials
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
 $username = 'p1Ii7JWQKLzZ64G9lt3PAUa8exNsf5RM';
 $password = 'h1YlowmzS6bROM8eHZBaT9pj5UcFtDIV';
@@ -26,10 +28,10 @@ $invoice_id = 10564;
 
 // This $data is all optional, but can be used to override the defaults
 $data = array(
-	//'email' => 'johndoe@send-invoice-to.com', 
-	//'message_subject' => 'Test subject', 
-	//'message_body' => 'Override the default message body here', 
-	//'message_from' => 'you@your-company.com', 
+	//'email' => 'johndoe@send-invoice-to.com',
+	//'message_subject' => 'Test subject',
+	//'message_body' => 'Override the default message body here',
+	//'message_from' => 'you@your-company.com',
 	);
 
 // Void an invoice

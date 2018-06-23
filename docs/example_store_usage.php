@@ -2,7 +2,10 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\Usage;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -16,7 +19,7 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 
 
-$Usage = new ChargeOverAPI_Object_Usage();
+$Usage = new Usage();
 
 $Usage->setLineItemId(854);
 //$Usage->setLineItemExternalKey('abc123');

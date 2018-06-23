@@ -2,7 +2,10 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\Customer;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'https://dev.chargeover.com/api/v3';
@@ -16,11 +19,11 @@ $password = 'vam458nCkIerzJqWSdF6BcAYHQiMwux2';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$Customer = new ChargeOverAPI_Object_Customer(array(
+$Customer = new Customer(array(
 
 	// Main customer data
 	'company' => 'Test API Company, LLC',
-	
+
 	'bill_addr1' => '123 ChargeOver Street',
 	'bill_addr2' => 'Suite 10',
 	'bill_city' => 'Minneapolis',
@@ -31,9 +34,9 @@ $Customer = new ChargeOverAPI_Object_Customer(array(
 	'external_key' => 'abcd' . mt_rand(1, 10000), 		// The external key is used to reference objects in external applications
 
 	// This is a short-cut to also creating a user at the same time
-	'superuser_name' => 'Ryan Bantz', 
-	'superuser_email' => 'ryan@chargeover.com', 
-	'superuser_username' => 'ryanbantz' . mt_rand(1, 1000), 
+	'superuser_name' => 'Ryan Bantz',
+	'superuser_email' => 'ryan@chargeover.com',
+	'superuser_username' => 'ryanbantz' . mt_rand(1, 1000),
 
 	));
 

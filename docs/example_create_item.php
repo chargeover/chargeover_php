@@ -2,7 +2,10 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\Item;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -14,14 +17,14 @@ $password = 'h1YlowmzS6bROM8eHZBaT9pj5UcFtDIV';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$Item = new ChargeOverAPI_Object_Item(array(
-	'name' => 'My Apple Test Item ' . mt_rand(0, 1000), 
-	'type' => ChargeOverAPI_Object_Item::TYPE_SERVICE,
+$Item = new Item(array(
+	'name' => 'My Apple Test Item ' . mt_rand(0, 1000),
+	'type' => Item::TYPE_SERVICE,
 
 	'pricemodel' => array(
-		//'base' => 295.95, 
-		'setup' => 35.95, 
-		'pricemodel' => ChargeOverAPI_Object_Item::PRICEMODEL_FLAT, 
+		//'base' => 295.95,
+		'setup' => 35.95,
+		'pricemodel' => Item::PRICEMODEL_FLAT,
 		)
 	));
 

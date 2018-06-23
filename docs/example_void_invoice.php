@@ -3,18 +3,20 @@
 /**
  * Example of creating an invoice, and then paying it using an ACH/eCheck payment
  *
- * 
+ *
  */
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
-// Your ChargeOver API credentials 
+// Your ChargeOver API credentials
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
 $username = '1EkcsIZRUJwdWmyT6lzqa4Y0pXvgNKCB';
 $password = 'IZah9p134R7OLtHl26BCmFXWUjVQxsNM';

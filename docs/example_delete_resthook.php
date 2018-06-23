@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -17,7 +19,7 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 $the_resthook_id = 3;
 
 // Create the user
-$resp = $API->delete(ChargeOverAPI_Object::TYPE_RESTHOOK, $the_resthook_id);
+$resp = $API->delete(\ChargeOver\APIObject::TYPE_RESTHOOK, $the_resthook_id);
 
 // Check for errors
 if (!$API->isError($resp))

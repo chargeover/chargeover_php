@@ -1,8 +1,10 @@
 <?php
 
+use ChargeOver\ChargeOverAPI;
+
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -15,9 +17,9 @@ $password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 //Get all customers
-$resp = $API->find('note', array( 
-	'obj_type:EQUALS:customer', 
-	'obj_id:EQUALS:328'
+$resp = $API->find('note', array(
+	'obj_type:EQUALS:customer',
+	'obj_id:EQUALS:8'
 	));
 
 
@@ -34,7 +36,7 @@ if (!$API->isError($resp))
 	$notes = $resp->response;
 
 	print_r($notes);
-	
+
 }
 else
 {

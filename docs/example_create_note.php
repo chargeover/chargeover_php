@@ -2,7 +2,10 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\Note;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -14,10 +17,10 @@ $password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$Note = new ChargeOverAPI_Object_Note(array(
-	'note' => 'Here is my test note', 
+$Note = new Note(array(
+	'note' => 'Here is my test note',
 
-	'obj_type' => 'customer', 
+	'obj_type' => 'customer',
 	'obj_id' => 328
 	));
 

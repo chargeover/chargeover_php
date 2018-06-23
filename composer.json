@@ -4,6 +4,8 @@
     "keywords":         ["chargeover", "payments", "pay", "subscription", "invoicing", "credit card", "payment", "recurring", "billing" ],
     "homepage":         "https://www.chargeover.com/",
     "autoload": {
-        "classmap": ["ChargeOverAPI.php", "ChargeOverAPI/"]
+        "psr-4" : {
+            "ChargeOver\\" : "src/"
+        }
     }
 }

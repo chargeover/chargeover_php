@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -21,8 +23,8 @@ $data = array(
 	//   "1wk"    // every week
 	//   "2wk"    // every other week
 	//   "qtr"    // every quarter
-	
-	'paycycle' => 'mon', 
+
+	'paycycle' => 'mon',
 	);
 
 $resp = $API->action('package', 557, 'paycycle', $data);

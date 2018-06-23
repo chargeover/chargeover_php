@@ -2,7 +2,10 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\User;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -16,8 +19,8 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $user_id = 350;
 
-$User = new ChargeOverAPI_Object_User(array(
-	'name' => 'Ryan Bantz', 
+$User = new User(array(
+	'name' => 'Ryan Bantz',
 	'email' => 'newemail@newemail.com',
 	));
 

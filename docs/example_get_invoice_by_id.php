@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'https://dev.chargeover.com/api/v3';
@@ -15,7 +17,7 @@ $password = '9vCJbmdZKSieVchyrRItFQw8MBN4lOH3';
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 //Find a customer by the ChargeOver customer ID
-$resp = $API->findById(ChargeOverAPI_Object::TYPE_INVOICE, 2720);
+$resp = $API->findById(\ChargeOver\APIObject::TYPE_INVOICE, 2720);
 
 if (!$API->isError($resp))
 {

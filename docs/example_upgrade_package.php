@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -19,20 +21,20 @@ $data = array(
 		0 => array(
 			// This is an upgrade to an EXISTING line item (the existing line item is specified by the line_item_id value)
 
-			'line_item_id' => 574, 
-			'item_id' => 1, 
-			'descrip' => 'upgraded description goes here', 
+			'line_item_id' => 574,
+			'item_id' => 1,
+			'descrip' => 'upgraded description goes here',
 
-			'custom_1' => 'new custom 1', 
+			'custom_1' => 'new custom 1',
 			'external_key' => 'new-external1234123234',
 			),
 		1 => array(
 			// This is a NEW line item, because we didn't specify an existing 'line_item_id' value
 
-			'item_id' => 1, 
-			'descrip' => 'upgraded description goes here', 
+			'item_id' => 1,
+			'descrip' => 'upgraded description goes here',
 
-			'custom_1' => 'new custom 1', 
+			'custom_1' => 'new custom 1',
 			'external_key' => 'new-external123433',
 			),
 		),

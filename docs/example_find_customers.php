@@ -1,8 +1,9 @@
 <?php
 
-header('Content-Type: text/plain');
+use ChargeOver\ChargeOverAPI;
 
-require '../ChargeOverAPI.php';
+header('Content-Type: text/plain');
+require '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -15,21 +16,21 @@ $password = '8HuIoLUlv4qfwNczSEC7Ypt3asbhi1k0';
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 // Find a customer by the ChargeOver customer ID
-$resp = $API->find('customer', array( 'bill_state:EQUALS:AZ' ));
+$resp = $API->find('customer');
 
 if (!$API->isError($resp))
 {
 	$customers = $resp->response;
 
 	print('Showing the list of customers...' . "\n\n");
-	
-	// Loop through the found invoices and print them out 
+
+	// Loop through the found invoices and print them out
 	foreach ($customers as $Customer)
 	{
 		print_r($Customer);
 	}
 
-	
+
 }
 else
 {

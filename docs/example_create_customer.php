@@ -2,7 +2,10 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\Customer;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -14,9 +17,9 @@ $password = 'u1tfwimpXGg8bdWELMzPrHxVFZe9DKNj';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$Customer = new ChargeOverAPI_Object_Customer(array(
+$Customer = new Customer(array(
 	'company' => 'Test API Company, LLC',
-	
+
 	'bill_addr1' => '123 ChargeOver Street',
 	'bill_addr2' => 'Suite 10',
 	'bill_city' => 'Minneapolis',
@@ -45,6 +48,6 @@ else
 	print("\n\n\n\n");
 	print($API->lastResponse());
 	print("\n\n\n\n");
-	
+
 }
 

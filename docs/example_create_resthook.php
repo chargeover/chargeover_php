@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -14,8 +16,8 @@ $password = 'B6LnuVGE74Co1TacXxHjdwk9hKtPpIW0';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$Resthook = new ChargeOverAPI_Object_Resthook(array(
-	'target_url' => 'http://playscape2.uglyslug.com/resthooks/user_update.php', 
+$Resthook = new \ChargeOver\APIObject_Resthook(array(
+	'target_url' => 'http://playscape2.uglyslug.com/resthooks/user_update.php',
 	'event' => 'user.update',
 	));
 

@@ -1,14 +1,16 @@
 <?php
 
 /**
- * Example of setting the payment method for a billing package 
+ * Example of setting the payment method for a billing package
  *
- * 
+ *
  */
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -23,10 +25,10 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 // This is the package we're sending out welcome e-mails to
 $package_id = 715;
 
-// Save credit card via API 
+// Save credit card via API
 $resp = $API->action('package', $package_id, 'welcome');
 
-// Response from the API 
+// Response from the API
 print_r($resp);
 
 // Debugging

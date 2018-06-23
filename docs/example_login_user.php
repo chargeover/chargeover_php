@@ -3,12 +3,14 @@
 /**
  * Example of automatically logging a user into the customer portal
  *
- * 
+ *
  */
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -20,14 +22,14 @@ $password = 'PBRIh8mqzErT2ikpud3VtLwX6W1Ko7JN';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-// This is the user/contact you want to log in 
+// This is the user/contact you want to log in
 $user_id = 389;
 
 $resp = $API->action('user', $user_id, 'login');
 
 if (!$API->isError($resp))
 {
-	// Forward the user to the one-time login token 
+	// Forward the user to the one-time login token
 	header('Location: ' . $resp->response);
 	exit;
 

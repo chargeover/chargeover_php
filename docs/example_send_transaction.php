@@ -3,12 +3,14 @@
 /**
  * Example of creating an invoice, and then paying it using an ACH/eCheck payment
  *
- * 
+ *
  */
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 // This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3.php';
@@ -27,14 +29,14 @@ $transaction_id = 23;
 $data = array(
 
 	// This let's you override the actual message template itself
-	//'message_id' => 3, 
-	
+	//'message_id' => 3,
+
 	// These let you override individual parts of the message
-	//'email' => 'johndoe@send-invoice-to.com', 
-	//'subject' => 'Test subject', 
-	//'html' => 'Override the default HTML body here', 
-	//'body' => 'Override the default message body here', 
-	//'from' => 'you@your-company.com', 
+	//'email' => 'johndoe@send-invoice-to.com',
+	//'subject' => 'Test subject',
+	//'html' => 'Override the default HTML body here',
+	//'body' => 'Override the default message body here',
+	//'from' => 'you@your-company.com',
 	);
 
 // Void an invoice

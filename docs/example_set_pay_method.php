@@ -1,14 +1,16 @@
 <?php
 
 /**
- * Example of setting the payment method for a billing package 
+ * Example of setting the payment method for a billing package
  *
- * 
+ *
  */
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -25,26 +27,26 @@ $customer_id = 2;
 $package_id = 1206;
 
 // Create a new credit card object
-$CreditCard = new ChargeOverAPI_Object_CreditCard();
+$CreditCard = new \ChargeOver\APIObject_CreditCard();
 $CreditCard->setNumber('4111 1111 1111 1111');
 $CreditCard->setExpdateYear(date('Y') + 1);
 $CreditCard->setExpdateMonth(12);
 $CreditCard->setCustomerId($customer_id);
 
-// Save credit card via API 
+// Save credit card via API
 $resp = $API->create($CreditCard);
 
-// Set the payment method 
+// Set the payment method
 if (!$API->isError($resp))
 {
 	$data = array(
-		'paymethod' => ChargeOverAPI_Object_Package::PAYMETHOD_CREDITCARD, 
-		'creditcard_id' => $resp->response->id, 
+		'paymethod' => \ChargeOver\APIObject_Package::PAYMETHOD_CREDITCARD,
+		'creditcard_id' => $resp->response->id,
 		);
 
 	/*
 	$data = array(
-		'paymethod' => ChargeOverAPI_Object_Package::PAYMETHOD_INVOICE, 
+		'paymethod' => \ChargeOver\APIObject_Package::PAYMETHOD_INVOICE,
 		);
 	*/
 

@@ -1,18 +1,6 @@
 <?php
 
-define('CHARGEOVERAPI_BASEDIR', dirname(__FILE__));
-
-require_once CHARGEOVERAPI_BASEDIR . '/ChargeOverAPI/Loader.php';
-
-ChargeOverAPI_Loader::load('/ChargeOverAPI/Object.php');
-
-ChargeOverAPI_Loader::load('/ChargeOverAPI/Aggregate.php');
-
-ChargeOverAPI_Loader::load('/ChargeOverAPI/Bulk.php');
-
-ChargeOverAPI_Loader::load('/ChargeOverAPI/Exception.php');
-
-ChargeOverAPI_Loader::import('/ChargeOverAPI/Object/');
+namespace ChargeOver;
 
 class ChargeOverAPI
 {
@@ -305,7 +293,7 @@ class ChargeOverAPI
 	 *
 	 * @param string $method
 	 * @param integer $id
-	 * @param varies $Object_or_obj_type			Either an object, or an object type constant
+	 * @param string|object $Object_or_obj_type			Either an object, or an object type constant
 	 * @return string 								The URL for the API
 	 */
 	protected function _map($method, $id, $Object_or_obj_type)
@@ -387,22 +375,22 @@ class ChargeOverAPI
 	protected function _typeClassMap()
 	{
 		return array(
-			ChargeOverAPI_Object::TYPE_CUSTOMER => 'ChargeOverAPI_Object_Customer',
-			ChargeOverAPI_Object::TYPE_USER => 'ChargeOverAPI_Object_User',
-			ChargeOverAPI_Object::TYPE_BILLINGPACKAGE => 'ChargeOverAPI_Object_BillingPackage',
-			ChargeOverAPI_Object::TYPE_PACKAGE => 'ChargeOverAPI_Object_Package',
-			ChargeOverAPI_Object::TYPE_PROJECT => 'ChargeOverAPI_Object_Project',
-			ChargeOverAPI_Object::TYPE_CREDITCARD => 'ChargeOverAPI_Object_CreditCard',
-			ChargeOverAPI_Object::TYPE_INVOICE => 'ChargeOverAPI_Object_Invoice',
-			ChargeOverAPI_Object::TYPE_TRANSACTION => 'ChargeOverAPI_Object_Transaction',
-			ChargeOverAPI_Object::TYPE_ACH => 'ChargeOverAPI_Object_Ach',
-			ChargeOverAPI_Object::TYPE_USAGE => 'ChargeOverAPI_Object_Usage',
-			ChargeOverAPI_Object::TYPE_ITEM => 'ChargeOverAPI_Object_Item',
-			ChargeOverAPI_Object::TYPE_ITEMCATEGORY => 'ChargeOverAPI_Object_ItemCategory',
-			ChargeOverAPI_Object::TYPE_NOTE => 'ChargeOverAPI_Object_Note',
-			ChargeOverAPI_Object::TYPE_COUNTRY => 'ChargeOverAPI_Object_Country',
-			ChargeOverAPI_Object::TYPE_TOKENIZED => 'ChargeOverAPI_Object_Tokenized',
-			ChargeOverAPI_Object::TYPE_RESTHOOK => 'ChargeOverAPI_Object_Resthook',
+			APIObject::TYPE_CUSTOMER => '\ChargeOver\APIObject\Customer',
+			APIObject::TYPE_USER => '\ChargeOver\APIObject\User',
+			APIObject::TYPE_BILLINGPACKAGE => '\ChargeOver\APIObject\BillingPackage',
+			APIObject::TYPE_PACKAGE => '\ChargeOver\APIObject\Package',
+			APIObject::TYPE_PROJECT => '\ChargeOver\APIObject\Project',
+			APIObject::TYPE_CREDITCARD => '\ChargeOver\APIObject\CreditCard',
+			APIObject::TYPE_INVOICE => '\ChargeOver\APIObject\Invoice',
+			APIObject::TYPE_TRANSACTION => '\ChargeOver\APIObject\Transaction',
+			APIObject::TYPE_ACH => '\ChargeOver\APIObject\Ach',
+			APIObject::TYPE_USAGE => '\ChargeOver\APIObject\Usage',
+			APIObject::TYPE_ITEM => '\ChargeOver\APIObject\Item',
+			APIObject::TYPE_ITEMCATEGORY => '\ChargeOver\APIObject\ItemCategory',
+			APIObject::TYPE_NOTE => '\ChargeOver\APIObject\Note',
+			APIObject::TYPE_COUNTRY => '\ChargeOver\APIObject\Country',
+			APIObject::TYPE_TOKENIZED => '\ChargeOver\APIObject\Tokenized',
+			APIObject::TYPE_RESTHOOK => '\ChargeOver\APIObject\Resthook',
 			);
 	}
 
@@ -411,14 +399,14 @@ class ChargeOverAPI
 
 	}
 
-	public function bulk($Bulk)
+	public function bulk(Bulk $Bulk)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_BULK, null, null);
 
 		return $this->_request('POST', $uri, $Bulk->toArray());
 	}
 
-	public function aggregate($Aggregate)
+	public function aggregate(Aggregate $Aggregate)
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_AGGREGATE, null, null);
 
@@ -597,15 +585,15 @@ class ChargeOverAPI
 				switch ($key)
 				{
 					case 'line_items':
-						$sclass = 'ChargeOverAPI_Object_LineItem';
+						$sclass = '\ChargeOver\APIObject\LineItem';
 						$is_list = true;
 						break;
 					case 'tierset':
-						$sclass = 'ChargeOverAPI_Object_Tierset';
+						$sclass = '\ChargeOver\APIObject\Tierset';
 						$is_list = false;
 						break;
 					case 'tiers':
-						$sclass = 'ChargeOverAPI_Object_Tier';
+						$sclass = '\ChargeOver\APIObject\Tier';
 						$is_list = true;
 						break;
 					default:

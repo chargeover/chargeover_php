@@ -2,7 +2,10 @@
 
 header('Content-Type: text/plain');
 
-require('../ChargeOverAPI.php');
+use ChargeOver\APIObject\Ach;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -16,14 +19,14 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $customer_id = 1560;
 
-$ACH = new ChargeOverAPI_Object_Ach(array(
+$ACH = new Ach(array(
 	'customer_id' => $customer_id, // Must be the customer ID of an existing customer in ChargeOver
 
-	'type' => ChargeOverAPI_Object_Ach::TYPE_CHECKING, 
-	'number' => '1234 1234 1234', 
-	'routing' => '072403004', 
-	
-	'name' => 'John Doe', 
+	'type' => Ach::TYPE_CHECKING,
+	'number' => '1234 1234 1234',
+	'routing' => '072403004',
+
+	'name' => 'John Doe',
 
 	));
 
@@ -32,7 +35,7 @@ $resp = $API->create($ACH);
 if (!$API->isError($resp))
 {
 	$ach_id = $resp->response->id;
-	
+
 	print('SUCCESS! Stored ACH/eCheck account as ach_id #: ' . $ach_id);
 }
 else

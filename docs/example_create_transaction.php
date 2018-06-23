@@ -2,7 +2,10 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\Transaction;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -15,7 +18,7 @@ $password = 'IZah9p134R7OLtHl26BCmFXWUjVQxsNM';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$Transaction = new ChargeOverAPI_Object_Transaction();
+$Transaction = new Transaction();
 
 $Transaction->setCustomerId(1);
 
@@ -35,7 +38,7 @@ $Transaction->setTransactionDate('2014-12-02');
 
 /*
 // If you also want to specify what invoices you apply this to
-$AppliedTo = new ChargeOverAPI_Object_Transaction();
+$AppliedTo = new \ChargeOver\APIObject_Transaction();
 $AppliedTo->setInvoiceId(1234);
 
 $Transaction->addAppliedTo($AppliedTo);

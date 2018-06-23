@@ -2,7 +2,11 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\Invoice;
+use ChargeOver\APIObject\LineItem;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -18,10 +22,10 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 $invoice_id = 10009;
 
 // Build up the object
-$Invoice = new ChargeOverAPI_Object_Invoice();
+$Invoice = new Invoice();
 $Invoice->setDate('2015-06-08');
 
-$LineItem = new ChargeOverAPI_Object_LineItem();
+$LineItem = new LineItem();
 $LineItem->setItemId(3);
 $LineItem->setLineRate(29.95);
 $LineItem->setLineQuantity(3);
@@ -30,7 +34,7 @@ $LineItem->setDescrip('Add this new line item to the invoice.');
 $Invoice->addLineItems($LineItem);
 
 // To keep the existing line item, you have to pass the line_item_id
-$LineItem = new ChargeOverAPI_Object_LineItem();
+$LineItem = new LineItem();
 $LineItem->setLineItemId(2575);
 
 $Invoice->addLineItems($LineItem);

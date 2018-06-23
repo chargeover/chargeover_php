@@ -1,11 +1,13 @@
 <?php
 
+namespace ChargeOver;
+
 if (!defined('JSON_PRETTY_PRINT'))
 {
 	define('JSON_PRETTY_PRINT', null);
 }
 
-class ChargeOverAPI_Object
+class APIObject
 {
 	const TYPE_CUSTOMER = 'customer';
 	const TYPE_BILLINGPACKAGE = 'billing_package';
@@ -26,11 +28,11 @@ class ChargeOverAPI_Object
 	const TYPE_RESTHOOK = '_resthook';
 
 	//protected $_arr;
-	
+
 	public function __construct($arr = array())
 	{
 		//$this->_arr = $arr;
-		
+
 		if (is_array($arr))
 		{
 			foreach ($arr as $key => $value)
@@ -39,16 +41,16 @@ class ChargeOverAPI_Object
 			}
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public static function transformMethodToField($method)
 	{
 		$strip = array(
-			'set', 
-			'get', 
-			'add', 
+			'set',
+			'get',
+			'add',
 			);
 
 		foreach ($strip as $prefix)
@@ -92,7 +94,7 @@ class ChargeOverAPI_Object
 			{
 				$parts[] = ucfirst(substr($field, $last, $i));
 				$i++;
-				$last = $i;				
+				$last = $i;
 			}
 		}
 
@@ -105,18 +107,18 @@ class ChargeOverAPI_Object
 	{
 		if (substr($name, 0, 3) == 'set')
 		{
-			$field = ChargeOverAPI_Object::transformMethodToField($name);
+			$field = APIObject::transformMethodToField($name);
 			//$this->_arr[$field] = current($args);
 			$this->$field = current($args);
 			return true;
 		}
 		else if (substr($name, 0, 3) == 'get')
 		{
-			$field = ChargeOverAPI_Object::transformMethodToField($name);
+			$field = APIObject::transformMethodToField($name);
 
 			//print('transformed [' . $name . ' to ' . $field . ']' . "\n");
 
-			if (array_key_exists(0, $args) and 			// Trying to get a specific element, e.g.   getLineItems(2) 
+			if (array_key_exists(0, $args) and 			// Trying to get a specific element, e.g.   getLineItems(2)
 				is_numeric($args[0]))
 			{
 				//if (!empty($this->_arr[$field][$args[0]]))
@@ -139,7 +141,7 @@ class ChargeOverAPI_Object
 		}
 		else if (substr($name, 0, 3) == 'add')
 		{
-			$field = ChargeOverAPI_Object::transformMethodToField($name);
+			$field = APIObject::transformMethodToField($name);
 
 			//if (!isset($this->_arr[$field]))
 			if (!isset($this->$field))
@@ -167,7 +169,7 @@ class ChargeOverAPI_Object
 				$val[$key] = $this->_massage($value);
 			}
 		}
-	
+
 		return $val;
 	}
 
@@ -175,7 +177,7 @@ class ChargeOverAPI_Object
 	{
 		$vars = get_object_vars($this);
 		$arr = $this->_massage($vars);
-		
+
 		return json_encode($arr, JSON_PRETTY_PRINT);
 	}
 

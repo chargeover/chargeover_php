@@ -1,14 +1,12 @@
 <?php
 
-if (!defined('JSON_PRETTY_PRINT'))
-{
-	define('JSON_PRETTY_PRINT', null);
-}
+namespace ChargeOver;
 
-class ChargeOverAPI_Bulk
+class Bulk
 {
 	protected $_request;
-	
+    protected $_prettyPrint = false;
+
 	public function __construct()
 	{
 		$this->_request = array();
@@ -17,17 +15,17 @@ class ChargeOverAPI_Bulk
 	public function bulk($method, $uri, $payload = null)
 	{
 		$this->_request[] = array(
-			'request_method' => $method, 
-			'uri' => $uri, 
-			'payload' => $payload, 
+			'request_method' => $method,
+			'uri' => $uri,
+			'payload' => $payload,
 			);
 	}
-	
+
 	protected function toJSON()
 	{
-		return json_encode($this->_request, JSON_PRETTY_PRINT);
+		return json_encode($this->_request, $this->_prettyPrint);
 	}
-	
+
 	public function toArray()
 	{
 		return $this->_request;

@@ -1,6 +1,8 @@
 <?php
 
-class ChargeOverAPI_Object_Item extends ChargeOverAPI_Object
+namespace ChargeOver\APIObject;
+
+class Item extends \ChargeOver\APIObject
 {
 	const TYPE_SERVICE = 'service';
 	const TYPE_PRODUCT = 'product';

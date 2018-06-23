@@ -1,13 +1,15 @@
 <?php
 
 /**
- * Example of deleting a customer from ChargeOver 
+ * Example of deleting a customer from ChargeOver
  */
 
 header('Content-Type: text/plain');
 
-// Require the library 
-require '../ChargeOverAPI.php';
+// Require the library
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 // This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -19,13 +21,13 @@ $password = 'IZah9p134R7OLtHl26BCmFXWUjVQxsNM';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-// This is the unique customer ID value 
+// This is the unique customer ID value
 $the_invoice_id = 12998;
 
 // Delete them
-$resp = $API->delete(ChargeOverAPI_Object::TYPE_INVOICE, $the_invoice_id);
+$resp = $API->delete(\ChargeOver\APIObject::TYPE_INVOICE, $the_invoice_id);
 
-// Check for errors 
+// Check for errors
 if (!$API->isError($resp))
 {
 	print('Invoice was deleted!');

@@ -2,7 +2,11 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\Invoice;
+use ChargeOver\APIObject\LineItem;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -14,11 +18,11 @@ $password = 'B6LnuVGE74Co1TacXxHjdwk9hKtPpIW0';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$Invoice = new ChargeOverAPI_Object_Invoice();
+$Invoice = new Invoice();
 $Invoice->setCustomerId(1);
 $Invoice->setDate('2014-01-02');
 
-$LineItem = new ChargeOverAPI_Object_LineItem();
+$LineItem = new LineItem();
 $LineItem->setItemId(4);
 $LineItem->setLineRate(29.95);
 $LineItem->setLineQuantity(3);

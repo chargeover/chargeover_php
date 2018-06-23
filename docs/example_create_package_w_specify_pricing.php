@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -18,22 +20,22 @@ $url = 'http://macbookpro.chargeover.com:8888/chargeover/signup/api/v3.php';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$Package = new ChargeOverAPI_Object_Package();
+$Package = new \ChargeOver\APIObject_Package();
 $Package->setCustomerId(1);
 
 // By default, ChargeOver will create MONTHLY recurring packages - but you can change this:
 //$Package->setPaycycle('yrl');  // yearly
 //$Package->setPayCycle('qtr');  // quarterly
-// @todo more cycles docs 
+// @todo more cycles docs
 
-$LineItem = new ChargeOverAPI_Object_LineItem();
+$LineItem = new \ChargeOver\APIObject_LineItem();
 $LineItem->setItemId(1);
 $LineItem->setDescrip('Test of a description goes here.');
 
 $LineItem->setTierset(array(
 	'setup' => 0,
 	'base' => 135,
-	'paycycle' => 'mon', 
+	'paycycle' => 'mon',
 	'pricemodel' => 'uni',
 	'tiers' => array(
 		0 => array( 'unit_from' => 1, 'unit_to' => 9999, 'amount' => 60 ),

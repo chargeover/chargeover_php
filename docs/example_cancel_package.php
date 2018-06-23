@@ -1,14 +1,15 @@
 <?php
 
 /**
- * Example of setting the payment method for a billing package 
+ * Example of setting the payment method for a billing package
  *
- * 
+ *
  */
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';

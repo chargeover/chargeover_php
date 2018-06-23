@@ -1,8 +1,10 @@
 <?php
 
+use ChargeOver\ChargeOverAPI;
+
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -15,7 +17,7 @@ $password = 'C05d6Tpz3LEo2RUhNwWC05d6Tpz3LEVKFcJa4bqAGYk';
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 //Find a customer by the ChargeOver customer ID
-$resp = $API->findById('customer', '8');
+$resp = $API->findById('customer', '386');
 
 
 /*
@@ -29,7 +31,7 @@ print("\n\n\n\n");
 if (!$API->isError($resp))
 {
 	$customer = $resp->response;
-	print('SUCCESS! got back customer: ' . $customer->company);
+	print('SUCCESS! got back customer: ' . $customer);
 }
 else
 {

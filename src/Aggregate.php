@@ -1,14 +1,11 @@
 <?php
 
-if (!defined('JSON_PRETTY_PRINT'))
-{
-	define('JSON_PRETTY_PRINT', null);
-}
+namespace ChargeOver;
 
-class ChargeOverAPI_Aggregate
+class Aggregate
 {
 	protected $_request;
-	
+
 	public function __construct($request = array())
 	{
 		$this->_request = $this->_massage($request);
@@ -17,10 +14,10 @@ class ChargeOverAPI_Aggregate
 	protected function _massage($arr)
 	{
 		$defaults = array(
-			'fields' => array(), 
-			'where' => array(), 
-			'object' => array(), 
-			'group' => '', 
+			'fields' => array(),
+			'where' => array(),
+			'object' => array(),
+			'group' => '',
 			);
 
 		return array_merge($defaults, $arr);
@@ -50,12 +47,12 @@ class ChargeOverAPI_Aggregate
 	{
 		$this->_request['object'] = $obj;
 	}
-	
+
 	protected function toJSON()
 	{
 		return json_encode($this->_request, JSON_PRETTY_PRINT);
 	}
-	
+
 	public function toArray()
 	{
 		return $this->_request;

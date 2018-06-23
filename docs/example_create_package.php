@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 // This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -14,7 +16,7 @@ $password = 'fhKyga18s3D42lIbB6vRc0TdFOzrYUkL';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$Package = new ChargeOverAPI_Object_Package();
+$Package = new \ChargeOver\APIObject_Package();
 $Package->setCustomerId(18);
 
 // Tell it to use whatever ACH account is on file for this customer
@@ -24,9 +26,9 @@ $Package->setCustomerId(18);
 // By default, ChargeOver will create MONTHLY recurring packages - but you can change this:
 //$Package->setPaycycle('yrl');  // yearly
 //$Package->setPaycycle('qtr');  // quarterly
-// @todo more cycles docs 
+// @todo more cycles docs
 
-$LineItem = new ChargeOverAPI_Object_LineItem();
+$LineItem = new \ChargeOver\APIObject_LineItem();
 $LineItem->setItemId(1);
 //$LineItem->setDescrip('Test of a description goes here.');
 $LineItem->setTrialDays(20);

@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -17,14 +19,14 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 $data = array(
 	'line_items' => array(
 		0 => array(
-			'line_item_id' => 576, 
-			'item_id' => 2, 
-			'descrip' => 'upgraded description goes here', 
+			'line_item_id' => 576,
+			'item_id' => 2,
+			'descrip' => 'upgraded description goes here',
 
 			'subscribe_prorate' => true, 		// pro-rate the new one
-			'cancel_prorate' => true, 			// pro-rate the old one 
+			'cancel_prorate' => true, 			// pro-rate the old one
 
-			'custom_1' => 'new custom 1', 
+			'custom_1' => 'new custom 1',
 			'external_key' => 'new-external',
 			),
 		),

@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -35,7 +37,7 @@ if (!$API->isError($resp))
 		print('Country: ' . $country->name . "\n");
 		print("\n");
 	}
-	
+
 }
 else
 {

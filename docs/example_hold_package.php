@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -18,7 +20,7 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $package_id = 582;
 
-$resp = $API->action('package', $package_id, 'hold', 
+$resp = $API->action('package', $package_id, 'hold',
 	array(
 		'holduntil_datetime' => date('Y-m-d H:i:s', strtotime('+30 days'))
 	));

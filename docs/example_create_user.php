@@ -2,7 +2,10 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\User;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/signup/api/v3';
@@ -14,18 +17,18 @@ $password = 'IZah9p134R7OLtHl26BCmFXWUjVQxsNM';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-$User = new ChargeOverAPI_Object_User(array(
-	'customer_id' => 1, 					// The customer # that the user/contact should be assigned to 
+$User = new User(array(
+	'customer_id' => 1, 					// The customer # that the user/contact should be assigned to
 
 	//'username' => 'my_test_username_' . mt_rand(0, 500), 	// (optional) The username the user can use to log in to their customer portal
-	'password' => 'some test password', 					// (optional) The password the user can use to log in 
+	'password' => 'some test password', 					// (optional) The password the user can use to log in
 
-	'name' => 'Ryan Bantz', 
+	'name' => 'Ryan Bantz',
 
 	'email' => 'ryan@adgadgagadg.com',
 	'phone' => '888-555-1212',
 
-	//'external_key' => 'abcd12345', 
+	//'external_key' => 'abcd12345',
 	));
 
 // Create the user

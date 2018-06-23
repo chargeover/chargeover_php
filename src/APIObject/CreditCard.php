@@ -1,6 +1,8 @@
 <?php
 
-class ChargeOverAPI_Object_CreditCard extends ChargeOverAPI_Object
+namespace ChargeOver\APIObject;
+
+class CreditCard extends \ChargeOver\APIObject
 {
 	const TYPE_MASTERCARD = 'mast';
 	const TYPE_VISA = 'visa';

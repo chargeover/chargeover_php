@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/signup/api/v3';
@@ -29,7 +31,7 @@ else
 	print($API->lastRequest());
 	print("\n\n");
 	print($API->lastResponse());
-	
+
 }
 
 print("\n\n");

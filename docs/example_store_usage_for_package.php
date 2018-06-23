@@ -2,7 +2,12 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\APIObject\LineItem;
+use ChargeOver\APIObject\Package;
+use ChargeOver\APIObject\Usage;
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://macbookpro.chargeover.com:8888/chargeover/signup/api/v3.php';
@@ -17,22 +22,22 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 $your_subscription_id = 'abcd1234' . mt_rand(0, 1000);
 
 // Create a new billing package
-$Package = new ChargeOverAPI_Object_Package();
+$Package = new Package();
 $Package->setCustomerId(1);
 
-// Tell the package to not invoice until the 1st 
+// Tell the package to not invoice until the 1st
 $Package->setHolduntilDatetime(date('Y-m-01', strtotime('+1 month')));
 
-// Here is your unique subscription ID # 
+// Here is your unique subscription ID #
 $Package->setExternalKey($your_subscription_id);
 
 // This is for our data usage
-$LineItem = new ChargeOverAPI_Object_LineItem();
+$LineItem = new LineItem();
 $LineItem->setItemId(13);
 $Package->addLineItems($LineItem);
 
 // This is for our extra # of devices
-$LineItem = new ChargeOverAPI_Object_LineItem();
+$LineItem = new LineItem();
 $LineItem->setItemId(14);
 $Package->addLineItems($LineItem);
 
@@ -40,17 +45,17 @@ $resp = $API->create($Package);
 
 if ($resp->response->id)
 {
-	// Created the package! 
+	// Created the package!
 
 
 
-	// Now, every day you want to push new usage to it 
+	// Now, every day you want to push new usage to it
 	// Get the package
 	$resp = $API->find('package', array('external_key:EQUALS:' . $your_subscription_id));
 	$resp = $API->findById('package', $resp->response[0]->getPackageId());
 
 	$Package = $resp->response;
-	
+
 	$Lines = $Package->getLineItems();
 	foreach ($Lines as $Line)
 	{
@@ -66,7 +71,7 @@ if ($resp->response->id)
 		}
 
 		// Push the usage
-		$Usage = new ChargeOverAPI_Object_Usage();
+		$Usage = new Usage();
 		$Usage->setLineItemId($Line->getLineItemId());
 		$Usage->setUsageValue($usage_data);
 
@@ -79,10 +84,10 @@ else
 	print('Error: ' . $resp->message);
 }
 
-// 
+//
 
 /*
-$Usage = new ChargeOverAPI_Object_Usage();
+$Usage = new \ChargeOver\APIObject_Usage();
 //$Usage->setLineItemId(327);
 $Usage->setLineItemExternalKey('abc123');
 $Usage->setUsageValue(1);

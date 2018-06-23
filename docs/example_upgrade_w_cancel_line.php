@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -17,11 +19,11 @@ $API = new ChargeOverAPI($url, $authmode, $username, $password);
 $data = array(
 	'line_items' => array(
 		0 => array(
-			
-			// The line_item_id to cancel
-			'line_item_id' => 611, 
 
-			// Tell it to cancel this line 
+			// The line_item_id to cancel
+			'line_item_id' => 611,
+
+			// Tell it to cancel this line
 			'cancel' => true
 			),
 		),

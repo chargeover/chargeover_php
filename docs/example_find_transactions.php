@@ -2,7 +2,9 @@
 
 header('Content-Type: text/plain');
 
-require '../ChargeOverAPI.php';
+use ChargeOver\ChargeOverAPI;
+
+require_once '../vendor/autoload.php';
 
 //This url should be specific to your ChargeOver instance
 $url = 'http://dev.chargeover.com/api/v3';
@@ -20,8 +22,8 @@ $resp = $API->find('transaction', array( 'transaction_type:EQUALS:pay', 'applied
 if (!$API->isError($resp))
 {
 	$transactions = $resp->response;
-	
-	// Loop through the found invoices and print them out 
+
+	// Loop through the found invoices and print them out
 	foreach ($transactions as $Payment)
 	{
 		print_r($Payment);
