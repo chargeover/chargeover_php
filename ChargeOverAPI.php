@@ -60,6 +60,9 @@ class ChargeOverAPI
 
 	protected $_debug = false;
 
+	// Allow/disallow stdClass objects to be created if no matching class can be found/is defined
+	protected $_stdclass = false;
+
 	// API flags
 	protected $_flags;
 
@@ -81,7 +84,20 @@ class ChargeOverAPI
 
 		$this->_debug = false;
 
+		// By default, we do not allow stdClass objects
+		$this->_stdclass = false;
+
 		$this->_flags = (array) $flags;
+	}
+
+	/**
+	 * Enable or disable support for creating stdClass objects if no matching specific object exists
+	 *
+	 * @param bool $stdclass    TRUE to enable support, FALSE to disable it
+	 */
+	public function stdclass($stdclass)
+	{
+		$this->_stdclass = (bool) $stdclass;
 	}
 
 	protected function _signature($public, $private, $url, $data)
@@ -243,7 +259,7 @@ class ChargeOverAPI
 			'message' => $err,
 			'details' => $details,
 			'response' => null,
-			)));
+		)));
 	}
 
 	public function http($opt, $value)
@@ -404,8 +420,7 @@ class ChargeOverAPI
 			ChargeOverAPI_Object::TYPE_COUNTRY => 'ChargeOverAPI_Object_Country',
 			ChargeOverAPI_Object::TYPE_TOKENIZED => 'ChargeOverAPI_Object_Tokenized',
 			ChargeOverAPI_Object::TYPE_RESTHOOK => 'ChargeOverAPI_Object_Resthook',
-			ChargeOverAPI_Object::TYPE_CHARGEOVERJS => 'ChargeOverAPI_Object_ChargeOverJS',
-			);
+		);
 	}
 
 	public function rawRequest($method, $uri, $data)
@@ -632,7 +647,36 @@ class ChargeOverAPI
 				}
 			}
 
-			return new $class($arr_or_obj);
+			if (class_exists($class))
+			{
+				return new $class($arr_or_obj);
+			}
+
+			return $this->_createStdObject($arr_or_obj);
 		}
+	}
+
+	/**
+	 * If no specific ChargeOverAPI_Object_* class can be found, create a stdClass object instead
+	 *
+	 * @param array $arr       The data to be contained in the object
+	 * @return stdClass|null   The object created   (or NULL, if support for this is disabled)
+	 */
+	protected function _createStdObject($arr)
+	{
+		if (!$this->_stdclass)
+		{
+			return null;
+		}
+
+		// Otherwise, create a stdClass object
+		$obj = new stdClass();
+
+		foreach ($arr as $k => $v)
+		{
+			$obj->{$k} = $v;
+		}
+
+		return $obj;
 	}
 }
