@@ -420,6 +420,7 @@ class ChargeOverAPI
 			ChargeOverAPI_Object::TYPE_COUNTRY => 'ChargeOverAPI_Object_Country',
 			ChargeOverAPI_Object::TYPE_TOKENIZED => 'ChargeOverAPI_Object_Tokenized',
 			ChargeOverAPI_Object::TYPE_RESTHOOK => 'ChargeOverAPI_Object_Resthook',
+			ChargeOverAPI_Object::TYPE_CHARGEOVERJS => 'ChargeOverAPI_Object_ChargeOverJS',
 		);
 	}
 
@@ -580,6 +581,22 @@ class ChargeOverAPI
 		}
 
 		$uri = $this->_map(ChargeOverAPI::METHOD_FIND, $id, $type);
+
+		$resp = $this->_request('GET', $uri);
+
+		if (!$this->isError($resp))
+		{
+			$class = $this->typeToClass($type);
+
+			$resp->response = $this->_createObject($class, $resp->response);
+		}
+
+		return $resp;
+	}
+
+	public function findByToken($type, $token)
+	{
+		$uri = $this->_map(ChargeOverAPI::METHOD_FIND, 'token:' . $token, $type);
 
 		$resp = $this->_request('GET', $uri);
 
