@@ -5,19 +5,19 @@ header('Content-Type: text/plain');
 require '../ChargeOverAPI.php';
 
 //This url should be specific to your ChargeOver instance
-$url = 'http://dev.chargeover.com/api/v3';
+$url = 'http://dev1.chargeover.test/api/v3';
 //$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
 
 $authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = '1EkcsIZRUJwdWmyT6lzqa4Y0pXvgNKCB';
-$password = 'IZah9p134R7OLtHl26BCmFXWUjVQxsNM';
+$username = 'CPKeAmDbBsarQxiZGL8Xl25uET9YU1Wn';
+$password = 'NH4Ya5sBJbqxOorAdw0RuigIhpEDXy19';
 
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
 $Transaction = new ChargeOverAPI_Object_Transaction();
 
-$Transaction->setCustomerId(1);
+$Transaction->setCustomerId(60);
 
 //$Transaction->setGatewayId(1);
 $Transaction->setGatewayStatus(1);
@@ -25,21 +25,33 @@ $Transaction->setGatewayTransid('abcd1234');
 $Transaction->setGatewayMsg('My test message');
 $Transaction->setGatewayMethod('visa');
 
-$Transaction->setAmount(1500.95);
+$Transaction->setAmount(15.95);
 
 $Transaction->setTransactionType('pay');
 $Transaction->setTransactionMethod('Visa');
 $Transaction->setTransactionDetail('');
 
-$Transaction->setTransactionDate('2014-12-02');
+$Transaction->setTransactionDate('2020-12-02');
 
 /*
 // If you also want to specify what invoices you apply this to
-$AppliedTo = new ChargeOverAPI_Object_Transaction();
-$AppliedTo->setInvoiceId(1234);
+$applied_tos = array();
 
-$Transaction->addAppliedTo($AppliedTo);
+$applied_to_1 = array(
+	'invoice_id' => 1072,   // invoice_id to apply the payment to
+	'applied' => 2.95,      // $2.95
+	);
+
+$applied_to_2 = array(
+	'invoice_id' => 1073,
+	'applied' => 13.00,
+	);
+
+$applied_tos[] = $applied_to_1;
+$applied_tos[] = $applied_to_2;
 */
+
+$Transaction->setAppliedTo($applied_tos);
 
 $resp = $API->create($Transaction);
 
