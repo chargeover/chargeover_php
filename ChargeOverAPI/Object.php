@@ -158,9 +158,13 @@ class ChargeOverAPI_Object
 
 	protected function _massage($val)
 	{
-		if (is_object($val))
+		if ($val instanceof ChargeOverAPI_Object)
 		{
 			$val = $val->toArray();
+		}
+		else if (is_object($val))
+		{
+			$val = get_object_vars($val);
 		}
 		else if (is_array($val))
 		{

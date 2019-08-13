@@ -513,7 +513,16 @@ class ChargeOverAPI
 	{
 		$uri = $this->_map(ChargeOverAPI::METHOD_MODIFY, $id, $Object);
 
-		return $this->_request('PUT', $uri, $Object->toArray());
+		if ($Object instanceof ChargeOverAPI_Object)
+		{
+			$arr = $Object->toArray();
+		}
+		else
+		{
+			$arr = get_object_vars($Object);
+		}
+
+		return $this->_request('PUT', $uri, $arr);
 	}
 
 	public function find($type, $where = array(), $sort = array(), $offset = 0, $limit = null)
