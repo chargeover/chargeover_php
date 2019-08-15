@@ -26,6 +26,8 @@ $Package->setCustomerId(1);
 //$Package->setPayCycle('qtr');  // quarterly
 // @todo more cycles docs 
 
+$Package->setCoupon('The coupon code goes here.');
+
 $LineItem = new ChargeOverAPI_Object_LineItem();
 $LineItem->setItemId(1);
 $LineItem->setDescrip('Test of a description goes here.');
