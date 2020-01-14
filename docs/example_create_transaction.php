@@ -3,14 +3,7 @@
 header('Content-Type: text/plain');
 
 require '../ChargeOverAPI.php';
-
-//This url should be specific to your ChargeOver instance
-$url = 'http://dev1.chargeover.test/api/v3';
-//$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
-
-$authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = 'CPKeAmDbBsarQxiZGL8Xl25uET9YU1Wn';
-$password = 'NH4Ya5sBJbqxOorAdw0RuigIhpEDXy19';
+require 'config.php';
 
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
