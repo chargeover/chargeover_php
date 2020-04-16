@@ -24,6 +24,7 @@ class ChargeOverAPI_Object
 	const TYPE_COUNTRY = 'country';
 	const TYPE_TOKENIZED = 'tokenized';
 
+	const TYPE_REPORT = '_report';
 	const TYPE_RESTHOOK = '_resthook';
 	const TYPE_CHARGEOVERJS = '_chargeoverjs';
 
