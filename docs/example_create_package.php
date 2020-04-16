@@ -3,14 +3,7 @@
 header('Content-Type: text/plain');
 
 require '../ChargeOverAPI.php';
-
-// This url should be specific to your ChargeOver instance
-$url = 'http://dev.chargeover.com/api/v3';
-//$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
-
-$authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = '1YExkQoscPr0eHzVbKvMASyLpmC427BW';
-$password = 'fhKyga18s3D42lIbB6vRc0TdFOzrYUkL';
+require 'config.php';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
@@ -25,6 +18,8 @@ $Package->setCustomerId(18);
 //$Package->setPaycycle('yrl');  // yearly
 //$Package->setPaycycle('qtr');  // quarterly
 // @todo more cycles docs 
+
+$Package->setCoupon('The coupon code goes here.');
 
 $LineItem = new ChargeOverAPI_Object_LineItem();
 $LineItem->setItemId(1);

@@ -1,35 +1,28 @@
 <?php
 
 /**
- * Example of creating an invoice, and then paying it using a credit card 
+ * Example of creating an invoice, and then paying it using a credit card
  *
- * 
+ *
  */
 
 header('Content-Type: text/plain');
 
 require '../ChargeOverAPI.php';
-
-//This url should be specific to your ChargeOver instance
-$url = 'http://dev.chargeover.com/api/v3';
-//$url = 'https://YOUR-INSTANCE-NAME.chargeover.com/api/v3';
-
-// Your ChargeOver API credentials 
-$authmode = ChargeOverAPI::AUTHMODE_HTTP_BASIC;
-$username = '1YExkQoscPr0eHzVbKvMASyLpmC427BW';
-$password = 'fhKyga18s3D42lIbB6vRc0TdFOzrYUkL';
+require 'config.php';
 
 $API = new ChargeOverAPI($url, $authmode, $username, $password);
 
-// Pay for it 
-$resp = $API->action('transaction', 
-	null, 
+// Pay for it
+$resp = $API->action('transaction',
+	null,
 	'pay', 				// This is the type of action we want to perform
 	array(
-		'customer_id' => 23, 
-		'amount' => 2.95, 
+		'customer_id' => 23,
+		'amount' => 2.95,
 		'applied_to' => array(
-			'invoice_id' => 46
+			array( 'invoice_id' => 46 ),
+			array( 'invoice_id' => 47 ),
 			),
 		));
 
