@@ -69,7 +69,7 @@ class ChargeOverAPI_Object
 		$len = strlen($method);
 		for ($i = 0; $i < $len; $i++)
 		{
-			if ($method{$i} >= 'A' and $method{$i} <= 'Z')
+			if ($method[$i] >= 'A' and $method[$i] <= 'Z')
 			{
 				$parts[] = substr($method, $last, $i - $last);
 				$last = $i;
@@ -91,7 +91,7 @@ class ChargeOverAPI_Object
 		$len = strlen($field);
 		for ($i = 0; $i < $len; $i++)
 		{
-			if ($field{$i} == '_')
+			if ($field[$i] == '_')
 			{
 				$parts[] = ucfirst(substr($field, $last, $i));
 				$i++;
