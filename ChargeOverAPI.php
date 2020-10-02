@@ -22,6 +22,7 @@ class ChargeOverAPI
 	const AUTHMODE_SIGNATURE_V1 = 'signature-v1';
 	const AUTHMODE_HTTP_BASIC = 'http-basic';
 
+	const METHOD_COUNT = 'count';
 	const METHOD_CREATE = 'create';
 	const METHOD_MODIFY = 'modify';
 	const METHOD_DELETE = 'delete';
@@ -524,6 +525,37 @@ class ChargeOverAPI
 		}
 
 		return $this->_request('PUT', $uri, $arr);
+	}
+
+	/**
+	 * 
+	 *
+	 * @param string $type
+	 * @param array $where
+	 * @return object
+	 */
+	public function count($type, $where = array())
+	{
+		$uri = $this->_map(self::METHOD_COUNT, null, $type);
+
+		$uri .= '/_count?_dummy=1';
+
+		// WHERE
+		if (is_array($where) and count($where))
+		{
+			foreach ($where as $key => $value)
+			{
+				// Escape commas (they are used to denote multiple query parameters)
+				$value = str_replace(',', '\\,', $value);
+
+				$where[$key] = urlencode($value);
+			}
+			$uri .= '&where=' . implode(',', $where);
+		}
+
+		$resp = $this->_request('GET', $uri);
+
+		return $resp;
 	}
 
 	public function find($type, $where = array(), $sort = array(), $offset = 0, $limit = null)
