@@ -528,11 +528,11 @@ class ChargeOverAPI
 	}
 
 	/**
-	 * 
+	 * Get a count of the number of objects (that optionally match a set of filters)
 	 *
-	 * @param string $type
-	 * @param array $where
-	 * @return object
+	 * @param string $type   The type of object
+	 * @param array $where   An optional array of fields to filter by
+	 * @return object        A response object where $resp->response is the # of object that matched 
 	 */
 	public function count($type, $where = array())
 	{
