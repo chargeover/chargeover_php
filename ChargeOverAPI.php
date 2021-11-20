@@ -203,6 +203,15 @@ class ChargeOverAPI
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $http_method);
 
+		// Override cURL options 
+		if ($this->_http)
+		{
+			foreach ($this->_http as $k => $v)
+			{
+				curl_setopt($ch, $k, $v);
+			}
+		}
+
 		// Build last request string
 		$this->_last_request = $http_method . ' ' . $endpoint . "\r\n\r\n";
 		if ($post_data)
@@ -263,9 +272,15 @@ class ChargeOverAPI
 		)));
 	}
 
+	/**
+	 * Override HTTP (cURL) options
+	 *
+	 * @param string $opt    The cURL option (php.net/curl)
+	 * @param string $value  The cURL value
+	 */
 	public function http($opt, $value)
 	{
-
+		$this->_http[$opt] = $value;
 	}
 
 	public function debug($debug)
@@ -532,7 +547,7 @@ class ChargeOverAPI
 	 *
 	 * @param string $type   The type of object
 	 * @param array $where   An optional array of fields to filter by
-	 * @return object        A response object where $resp->response is the # of object that matched 
+	 * @return object        A response object where $resp->response is the # of object that matched
 	 */
 	public function count($type, $where = array())
 	{
