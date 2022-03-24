@@ -19,6 +19,7 @@ class ChargeOverAPI_Object
 	const TYPE_CREDITCARD = 'creditcard';
 	const TYPE_TRANSACTION = 'transaction';
 	const TYPE_ACH = 'ach';
+	const TYPE_BRAND = 'brand';
 	const TYPE_USAGE = 'usage';
 	const TYPE_NOTE = 'note';
 	const TYPE_COUNTRY = 'country';
