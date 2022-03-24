@@ -429,7 +429,7 @@ class ChargeOverAPI
 			ChargeOverAPI_Object::TYPE_QUOTE => 'ChargeOverAPI_Object_Quote',
 			ChargeOverAPI_Object::TYPE_TRANSACTION => 'ChargeOverAPI_Object_Transaction',
 			ChargeOverAPI_Object::TYPE_ACH => 'ChargeOverAPI_Object_Ach',
-            ChargeOverAPI_Object::TYPE_BRAND => 'ChargeOverAPI_Object_Brand',
+			ChargeOverAPI_Object::TYPE_BRAND => 'ChargeOverAPI_Object_Brand',
 			ChargeOverAPI_Object::TYPE_USAGE => 'ChargeOverAPI_Object_Usage',
 			ChargeOverAPI_Object::TYPE_ITEM => 'ChargeOverAPI_Object_Item',
 			ChargeOverAPI_Object::TYPE_ITEMCATEGORY => 'ChargeOverAPI_Object_ItemCategory',
