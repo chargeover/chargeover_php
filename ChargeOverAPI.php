@@ -504,7 +504,7 @@ class ChargeOverAPI
 	 * @param integer $id
 	 * @param string $action
 	 * @param array $data
-	 * @return array
+	 * @return object
 	 */
 	public function action($type, $id, $action, $data = array())
 	{
