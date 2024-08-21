@@ -5,6 +5,7 @@ if (!defined('JSON_PRETTY_PRINT'))
 	define('JSON_PRETTY_PRINT', null);
 }
 
+#[AllowDynamicProperties]
 class ChargeOverAPI_Object
 {
 	const TYPE_CUSTOMER = 'customer';
