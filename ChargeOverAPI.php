@@ -722,7 +722,7 @@ class ChargeOverAPI
 				}
 			}
 
-			if (class_exists($class))
+			if (!is_null($class) && class_exists($class))
 			{
 				return new $class($arr_or_obj);
 			}
